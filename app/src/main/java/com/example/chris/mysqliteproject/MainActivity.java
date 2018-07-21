@@ -1,6 +1,7 @@
 package com.example.chris.mysqliteproject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,20 +21,56 @@ public class MainActivity extends AppCompatActivity {
     MyDBHandler dbHandler;
     Button secondActivityButton;
 
+    TextView previouslyInitTextView;
+    Button previouslyInitButton;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
+        //region referencesToIds
         addButton = (Button) findViewById(R.id.addButton);
         removeButton = (Button) findViewById(R.id.removeButton);
         inputEditText = (EditText) findViewById(R.id.writeToFileEditText);
         resultsTextView = (TextView) findViewById(R.id.resultsTextView);
         dbHandler = new MyDBHandler(this, null, null, 1);
         secondActivityButton = (Button) findViewById(R.id.secondActivityButton);
+        previouslyInitTextView = (TextView) findViewById(R.id.previouslyInitTextView);
+        previouslyInitButton = (Button) findViewById(R.id.previouslyInitButton);
+        //endregion
+
+        //print the info in the SQLite table upon creating activity
         printDatabase();
 
+        //region SharedPreferences
+        final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        boolean value = sharedPreferences.getBoolean(TEXT, false);
+        if (value){
+            previouslyInitButton.setEnabled(false);
+            previouslyInitTextView.setText("The button has been previously pressed");
+        }
+
+        previouslyInitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putBoolean(TEXT, true);
+                editor.apply();
+                previouslyInitTextView.setText("The button has been previously pressed");
+                previouslyInitButton.setEnabled(false);
+            }
+        });
+
+        //endregion
+
+        //region Button Onclicks
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //endregion
+
     } // end of onCreate
-
-
 
     public void printDatabase(){
         String dbString = dbHandler.databaseToString();
