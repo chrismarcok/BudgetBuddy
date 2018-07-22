@@ -2,15 +2,13 @@ package com.example.chris.mysqliteproject;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +18,14 @@ public class MainActivity extends AppCompatActivity {
     TextView resultsTextView;
     MyDBHandler dbHandler;
     Button secondActivityButton;
+    TextView welcomeTextView;
 
     TextView previouslyInitTextView;
     Button previouslyInitButton;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT = "text";
+    public static final String FIRST_NAME = "firstName";
 
 
     @Override
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         secondActivityButton = (Button) findViewById(R.id.secondActivityButton);
         previouslyInitTextView = (TextView) findViewById(R.id.previouslyInitTextView);
         previouslyInitButton = (Button) findViewById(R.id.previouslyInitButton);
+        welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
         //endregion
 
         //print the info in the SQLite table upon creating activity
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         //region SharedPreferences
         final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String firstName = sharedPreferences.getString(FIRST_NAME, "unnamed");
+        welcomeTextView.setText("Welcome, " + firstName + ".");
 
         boolean value = sharedPreferences.getBoolean(TEXT, false);
         if (value){
