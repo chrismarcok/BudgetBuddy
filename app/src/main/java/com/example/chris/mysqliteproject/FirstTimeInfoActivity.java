@@ -42,7 +42,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                     editor.putString(FIRST_NAME, firstName);
                     editor.putString(LAST_NAME, lastName);
                     editor.apply();
-                    Intent startMainActivity = new Intent(FirstTimeInfoActivity.this, MainActivity.class);
+                    Intent startMainActivity = new Intent(FirstTimeInfoActivity.this, HomeActivity.class);
                     startActivity(startMainActivity);
                 }
                 else{

@@ -57,11 +57,11 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startIntent = new Intent(SplashScreenActivity.this, FirstTimeActivity.class);
             }
             else{
-                startIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                startIntent = new Intent(SplashScreenActivity.this, HomeActivity.class);
             }
 
             //DEBUGGING
-            //startIntent = new Intent(SplashScreenActivity.this, FirstTimeActivity.class);
+            //startIntent = new Intent(SplashScreenActivity.this, HomeActivity.class);
 
             startActivity(startIntent);
             SplashScreenActivity.this.finish(); //destroy activity so back button doesnt work

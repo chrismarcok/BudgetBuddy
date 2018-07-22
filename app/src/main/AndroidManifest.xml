@@ -33,7 +33,8 @@
             android:screenOrientation="portrait">
             >
         </activity>
-        <activity android:name=".FirstTimeInfoActivity"></activity>
+        <activity android:name=".FirstTimeInfoActivity" />
+        <activity android:name=".HomeActivity"></activity>
     </application>
 
 </manifest>
