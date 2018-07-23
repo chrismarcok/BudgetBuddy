@@ -11,7 +11,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "entries.db";
     public static final String TABLE_ENTRIES = "entries";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "_name";
+    public static final String COLUMN_VALUE = "_value";
+    public static final String COLUMN_DATE = "_date";
+    public static final String COLUMN_DETAILS = "_details";
+    public static final String COLUMN_LOCATION = "_location";
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -20,8 +23,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_ENTRIES + " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME + " TEXT" +
+                COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                COLUMN_VALUE + " TEXT, " +
+                COLUMN_DATE + " TEXT, " +
+                COLUMN_DETAILS + " TEXT, " +
+                COLUMN_LOCATION + " TEXT" +
                 ");";
         //CREATE TABLE entries (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT);
         db.execSQL(query);
@@ -38,7 +44,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     public void addEntry(Entry entry){
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, entry.get_name());
+        values.put(COLUMN_ID, entry.get_id());
+        values.put(COLUMN_VALUE, entry.get_value());
+        values.put(COLUMN_DATE, entry.get_date().toString());
+        values.put(COLUMN_DETAILS, entry.get_details());
+        values.put(COLUMN_LOCATION, entry.get_location());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ENTRIES, null, values);
         db.close();
@@ -47,10 +57,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
 //        db.execSQL("INSERT INTO entries (_name) VALUES (\"" + name + "\");");
     }
 
-    public void deleteEntry(String entryName){
+    public void deleteEntry(int entryId){
         SQLiteDatabase db = getWritableDatabase();
         //DELETE FROM entries WHERE _name = "insertnamehere";
-        db.execSQL("DELETE FROM "+ TABLE_ENTRIES + " WHERE " + COLUMN_NAME + " = \"" + entryName + "\";");
+        db.execSQL("DELETE FROM "+ TABLE_ENTRIES + " WHERE " + COLUMN_ID + " = \"" + entryId + "\";");
 //        db.execSQL("DELETE FROM entries WHERE _name = " + "\"" + entryName + "\";");
     }
 
@@ -63,9 +73,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
         while (!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex(COLUMN_NAME)) != null){
+            if(c.getString(c.getColumnIndex(COLUMN_VALUE)) != null){
                 dbString += c.getString(c.getColumnIndex(COLUMN_ID)) + ". ";
-                dbString += c.getString(c.getColumnIndex(COLUMN_NAME)) + "\n";
+                dbString += c.getString(c.getColumnIndex(COLUMN_VALUE)) + "\n";
             }
             c.moveToNext();
         }

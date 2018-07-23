@@ -36,7 +36,7 @@ public class SecondActivity extends AppCompatActivity {
         readBtn = (Button) findViewById(R.id.readBtn);
         writeBtn = (Button) findViewById(R.id.writeBtn);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
-        inputEditText = (EditText) findViewById(R.id.writeToFileEditText);
+        inputEditText = (EditText) findViewById(R.id.amountEditText);
         secondActivityTextView = (TextView) findViewById(R.id.secondActivityTextView);
         websiteButton = (Button) findViewById(R.id.websiteButton);
 
