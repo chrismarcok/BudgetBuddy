@@ -1,9 +1,10 @@
 package com.example.chris.mysqliteproject;
 
+
 import java.util.Date;
 
 public class Entry {
-    private static int _numOfEntries = 0;
+
     private int _id;
     private String _details;
     private Date _date;
@@ -11,23 +12,18 @@ public class Entry {
     private float _value;
 
 
+    public Entry(int id, float value, Date date, String details, String location){
+        this._id = id;
+        this._value = value;
+        this._date = date;
+        this._details = details;
+        this._location = location;
+    }
     public Entry(float value, Date date, String details, String location){
         this._value = value;
         this._date = date;
-        if (details.equals(null)){
-            this._details = "";
-        }
-        else {
-            this._details = details;
-        }
-        if (location.equals(null)){
-            this._location = "";
-        }
-        else {
-            this._location = location;
-        }
-        this._id = _numOfEntries;
-        _numOfEntries++;
+        this._details = details;
+        this._location = location;
     }
 
     public Entry(String e){

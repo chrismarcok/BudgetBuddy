@@ -8,7 +8,25 @@
     android:padding="7dp"
     android:layout_gravity="center"
     >
+    <LinearLayout
+        android:layout_height="35dp"
+        android:layout_width="match_parent">
     <TextView
+        android:onClick="showInfo"
+        android:id="@+id/txtInfo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="!"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="start"
+        android:textSize="18dp"
+        android:background="@drawable/circlebackgroundgreen"
+
+        />
+    <TextView
+        android:layout_marginLeft="276dp"
         android:id="@+id/txtclose"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -20,18 +38,18 @@
         android:background="@drawable/circlebackgroundpurple"
 
         />
-
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_height="40dp"
             android:layout_width="match_parent"
             android:text="New Entry"
             android:textStyle="bold"
-            android:textColor="@color/black_overlay"
+            android:textColor="@color/lightblue"
             android:gravity="center"
             android:textSize="26dp"/>
         <LinearLayout
@@ -49,8 +67,9 @@
                 />
 
             <EditText
+                android:layout_marginLeft="150dp"
                 android:id="@+id/amountEditText"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
 
                 android:ems="10"
@@ -64,7 +83,7 @@
             <TextView
                 android:layout_height="40dp"
                 android:layout_width="wrap_content"
-                android:text="Date"
+                android:text="@string/date"
                 android:textStyle="bold"
                 android:textColor="@color/black_overlay"
                 android:gravity="center"
@@ -72,13 +91,14 @@
                 />
 
             <EditText
+                android:layout_marginLeft="29dp"
                 android:id="@+id/dateEditText"
-                android:layout_width="100dp"
+                android:layout_width="259dp"
                 android:layout_height="wrap_content"
 
                 android:ems="10"
-                android:hint="Ex. 9.99"
-                android:inputType="numberDecimal" />
+                android:hint="(Default: Now)"
+                android:inputType="datetime" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -87,7 +107,7 @@
             <TextView
                 android:layout_height="40dp"
                 android:layout_width="wrap_content"
-                android:text="Location"
+                android:text="@string/location"
                 android:textStyle="bold"
                 android:textColor="@color/black_overlay"
                 android:gravity="center"
@@ -95,13 +115,15 @@
                 />
 
             <EditText
+                android:layout_marginLeft="5dp"
                 android:id="@+id/locationEditText"
-                android:layout_width="100dp"
+                android:layout_width="251dp"
                 android:layout_height="wrap_content"
 
                 android:ems="10"
-                android:hint="Ex. 9.99"
-                android:inputType="numberDecimal" />
+                android:hint="Ex. The Supermarket"
+                android:inputType="textShortMessage"
+                android:visibility="visible" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -110,7 +132,7 @@
             <TextView
                 android:layout_height="40dp"
                 android:layout_width="wrap_content"
-                android:text="Details"
+                android:text="@string/details"
                 android:textStyle="bold"
                 android:textColor="@color/black_overlay"
                 android:gravity="center"
@@ -118,21 +140,30 @@
                 />
 
             <EditText
+                android:layout_marginLeft="3dp"
                 android:id="@+id/detailsEditText"
-                android:layout_width="100dp"
+                android:layout_width="267dp"
                 android:layout_height="wrap_content"
 
                 android:ems="10"
-                android:hint="Ex. 9.99"
-                android:inputType="numberDecimal" />
+                android:hint="Ex. Bananas for new diet"
+                android:inputType="textLongMessage" />
         </LinearLayout>
+
         <Button
             android:id="@+id/submitButton"
+
+
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_marginTop="30dp"
             android:layout_gravity="center_horizontal"
-            />
+            android:layout_marginTop="40dp"
+            android:text="Submit"/>
+        <!--
+        android:onClick="showConfirmPopUp"
+        -->
+
     </LinearLayout>
+
 </LinearLayout>

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BudgetBuddy</string>
+    <string name="okay"><u>Okay</u></string>
+    <string name="date"><font fgcolor='#8B0000'>*</font>Date</string>
+    <string name="location"><font fgcolor='#8B0000'>*</font>Location</string>
+    <string name="details"><font fgcolor='#8B0000'>*</font>Details</string>
+    <string name="info">Fields marked with <font fgcolor='#8B0000'>*</font> are not required.</string>
 </resources>

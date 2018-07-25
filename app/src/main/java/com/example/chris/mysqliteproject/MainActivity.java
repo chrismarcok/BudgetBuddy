@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TEXT = "text";
     public static final String FIRST_NAME = "firstName";
 
+    public static ArrayList<Entry> entries = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //region referencesToIds
-        addButton = (Button) findViewById(R.id.addButton);
+
         removeButton = (Button) findViewById(R.id.removeButton);
         inputEditText = (EditText) findViewById(R.id.amountEditText);
         resultsTextView = (TextView) findViewById(R.id.resultsTextView);
@@ -75,28 +78,11 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         //region Button Onclicks
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String currentText = inputEditText.getText().toString();
-                if ("".equals(currentText)){
-                    Toast.makeText(getApplicationContext(), "Cannot enter empty string!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Entry e = new Entry (currentText);
-
-                //resultsTextView.setText(e.get_name());
-
-                dbHandler.addEntry(e);
-                printDatabase();
-            }
-        });
 
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentText = inputEditText.getText().toString();
-                dbHandler.deleteEntry(0);
+                dbHandler.dequeue();
                 printDatabase();
             }
         });
