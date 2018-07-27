@@ -22,6 +22,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_DETAILS = "_details";
     public static final String COLUMN_LOCATION = "_location";
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    public static final DateFormat DATE_FORMAT_NO_SEC = new SimpleDateFormat("yyyy-mm-dd hh:mm");
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -55,7 +56,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_LOCATION, entry.get_location());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ENTRIES, null, values);
-
         db.close();
     }
 
@@ -67,8 +67,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     public void dequeue(){
         SQLiteDatabase db = getWritableDatabase();
+
         db.execSQL("DELETE FROM " + TABLE_ENTRIES + " WHERE " + COLUMN_ID + " = (SELECT min(" + COLUMN_ID +  ") FROM " + TABLE_ENTRIES + ");");
         db.close();
+
     }
 
     public String databaseToString(){
@@ -109,6 +111,41 @@ public class MyDBHandler extends SQLiteOpenHelper{
         c.close();
         db.close();
         return dbString;
+    }
+
+    public void fetchDatabaseEntries(){
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_ENTRIES + ";";
+        //String query = "SELECT * FROM entries;";
+
+        Cursor c = db.rawQuery(query, null);
+        MainActivity.entries.clear();
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex(COLUMN_VALUE)) != null){
+
+                String strDate =  c.getString(c.getColumnIndex(COLUMN_DATE));
+
+                Date resultDate = new Date(1L);
+
+                try {
+                    resultDate = DATE_FORMAT.parse(strDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Entry e = new Entry(c.getInt(c.getColumnIndex(COLUMN_ID)),
+                        c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate,
+                        c.getString(c.getColumnIndex(COLUMN_LOCATION)), c.getString(c.getColumnIndex(COLUMN_DETAILS)));
+
+                MainActivity.entries.add(e);
+
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
     }
 
 }

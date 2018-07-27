@@ -22,6 +22,11 @@ public class HomeActivity extends AppCompatActivity {
 
     CardView cardOneCardView;
     CardView cardTwoCardView;
+    CardView cardThreeCardView;
+    CardView cardFourCardView;
+    CardView cardFiveCardView;
+    CardView cardSixCardView;
+    MyDBHandler dbHandler;
 
 
     @Override
@@ -33,11 +38,18 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler.fetchDatabaseEntries();
+
         myDialog = new Dialog(this);
 
 
         cardOneCardView = (CardView) findViewById(R.id.cardOneCardView);
         cardTwoCardView = (CardView) findViewById(R.id.cardTwoCardView);
+        cardThreeCardView =(CardView) findViewById(R.id.cardThreeCardView);
+        cardFourCardView = (CardView) findViewById(R.id.cardFourCardView);
+        cardFiveCardView = (CardView) findViewById(R.id.cardFiveCardView);
+        cardSixCardView =(CardView) findViewById(R.id.cardSixCardView);
 
 
         cardTwoCardView.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +59,18 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(startIntent);
             }
         });
+        cardThreeCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(HomeActivity.this, LogsActivity.class);
+                if (MainActivity.entries.size() > 0) {
+                    startActivity(startIntent);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "No logs to show!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -54,9 +78,9 @@ public class HomeActivity extends AppCompatActivity {
         TextView txtclose;
         Button submitButton;
         final EditText amountEditText;
-        EditText dateEditText;
-        EditText locationEditText;
-        EditText detailsEditText;
+        final EditText dateEditText;
+        final EditText locationEditText;
+        final EditText detailsEditText;
 
         myDialog.setContentView(R.layout.newentrypopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
@@ -83,9 +107,10 @@ public class HomeActivity extends AppCompatActivity {
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
 
 
-                    Entry newEntry = new Entry(amountFloat, now, "", "");
+                    Entry newEntry = new Entry(amountFloat, now, locationEditText.getText().toString(), detailsEditText.getText().toString());
                     dbHandler.addEntry(newEntry);
                     Toast.makeText(getApplicationContext(), "Entry added", Toast.LENGTH_SHORT).show();
+                    dbHandler.fetchDatabaseEntries();
                     myDialog.dismiss();
                 }
             }

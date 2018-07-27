@@ -17,7 +17,13 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <!--
+         FIRST CARDVIEW
+         -->
         <android.support.v7.widget.CardView
+
+
+
             android:id="@+id/cardOneCardView"
             android:layout_width="190dp"
 
@@ -39,13 +45,13 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circlebackgroundpurple"
                     android:padding="10dp"
-                    android:src="@drawable/ic_attach_money_black_24dp" />
+                    android:src="@drawable/ic_control_point_black_24dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Banking"
+                    android:text="New Entry"
                     android:textStyle="bold" />
 
                 <View
@@ -59,10 +65,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Check your bank activities" />
+                    android:text="Add a new entry" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <!--
+         SECOND CARDVIEW
+         -->
         <android.support.v7.widget.CardView
             android:id="@+id/cardTwoCardView"
             android:layout_width="190dp"
@@ -88,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Ideas"
+                    android:text="BUDGET LEFT BOX"
                     android:textStyle="bold" />
 
                 <View
@@ -102,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Check your bank activities" />
+                    android:text="Under/Over Weekly Budget" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -113,7 +122,12 @@
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal">
+
+        <!--
+         THIRD CARDVIEW
+         -->
         <android.support.v7.widget.CardView
+            android:id="@+id/cardThreeCardView"
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_height="160dp"
@@ -128,14 +142,14 @@
                     android:layout_height="64dp"
                     android:layout_width="64dp"
                     android:background="@drawable/circlebackgroundgreen"
-                    android:src="@drawable/ic_wifi_black_24dp"
+                    android:src="@drawable/ic_format_list_bulleted_black_24dp"
                     android:padding="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Connect"/>
+                    android:text="Logs"/>
                 <View
                     android:layout_height="10dp"
                     android:layout_width="match_parent"
@@ -145,11 +159,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Check your bank activities"
+                    android:text="View previous entries"
                     android:padding="5dp"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
+        <!--
+         FOURTH CARDVIEW
+         -->
         <android.support.v7.widget.CardView
+            android:id="@+id/cardFourCardView"
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_height="160dp"
@@ -166,14 +184,14 @@
                     android:layout_height="64dp"
                     android:layout_width="64dp"
                     android:background="@drawable/circlebackgroundyellow"
-                    android:src="@drawable/ic_control_point_black_24dp"
+                    android:src="@drawable/ic_whatshot_black_24dp"
                     android:padding="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Add"/>
+                    android:text="Streak"/>
                 <View
                     android:layout_height="10dp"
                     android:layout_width="match_parent"
@@ -183,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Lorum Ipsum"
+                    android:text="View your budget records"
                     android:padding="5dp"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -195,11 +213,55 @@
         android:clipToPadding="false"
         android:gravity="center"
         android:orientation="horizontal">
+        <!--
+         FIFTH CARDVIEW
+         -->
         <android.support.v7.widget.CardView
+            android:id="@+id/cardFiveCardView"
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_height="160dp"
-            android:layout_width="250dp"
+            android:layout_width="190dp"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_height="64dp"
+                    android:layout_width="64dp"
+                    android:background="@drawable/circlebackgroundlightblue"
+                    android:src="@drawable/ic_settings_black_24dp"
+                    android:padding="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:text="Settings"/>
+                <View
+                    android:layout_height="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/lightgray"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Configure app settings"
+                    android:padding="5dp"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!--
+         SIXTH CARDVIEW
+         -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardSixCardView"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_height="160dp"
+            android:layout_width="190dp"
             android:layout_margin="5dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -210,14 +272,14 @@
                     android:layout_height="64dp"
                     android:layout_width="64dp"
                     android:background="@drawable/circlebackgroundpink"
-                    android:src="@drawable/ic_attach_file_black_24dp"
+                    android:src="@drawable/ic_spa_black_24dp"
                     android:padding="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Attach"/>
+                    android:text="About"/>
                 <View
                     android:layout_height="10dp"
                     android:layout_width="match_parent"
@@ -227,11 +289,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Lorum Ipsum"
+                    android:text="Developer Info"
                     android:padding="5dp"/>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
 
     </LinearLayout>
 
