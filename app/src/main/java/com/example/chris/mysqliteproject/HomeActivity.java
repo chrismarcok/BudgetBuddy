@@ -18,7 +18,7 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     Dialog myDialog;
-        Dialog infoDialog;
+    Dialog infoDialog;
 
     CardView cardOneCardView;
     CardView cardTwoCardView;
@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
-        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler = new MyDBHandler(this, null, null, 1);
         dbHandler.fetchDatabaseEntries();
 
         myDialog = new Dialog(this);
@@ -78,6 +78,15 @@ public class HomeActivity extends AppCompatActivity {
                 Intent startIntent = new Intent(HomeActivity.this, RecordsActivity.class);
                 startActivity(startIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+        cardFiveCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(HomeActivity.this, FirstTimeInfoActivity.class);
+                startIntent.putExtra("com.example.chris.mysqliteproject.INFO", "This information was passed from the first activity.");
+                startActivity(startIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
