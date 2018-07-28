@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/slideImageView"
+        android:paddingTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_above="@+id/headingTextView"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circlebackgroundpurple"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="visible"
+        android:src="@mipmap/ic_whatshot_black_24dp" />
+
+    <TextView
+        android:id="@+id/headingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bodyTextView"
+        android:layout_centerHorizontal="true"
+        android:text="HEADING"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/bodyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:padding="35dp"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. lorem Ipsum has been the industry's standard dummy text ever since the"
+        android:textColor="@color/lightgray"
+        android:textSize="24sp" />
+
+
+</RelativeLayout>

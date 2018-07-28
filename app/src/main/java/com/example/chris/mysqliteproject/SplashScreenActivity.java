@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private final int SLEEP_TIMER = 600;
+    private final int SLEEP_TIMER = 1200;
     TextView splashTextView;
     ImageView splashImageView;
 
@@ -35,7 +35,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
         splashImageView = (ImageView) findViewById(R.id.splashImageView);
-        splashTextView = (TextView) findViewById(R.id.splashTextView);
         LogoLauncher logoLauncher = new LogoLauncher();
         logoLauncher.start();
     }

@@ -65,10 +65,19 @@ public class HomeActivity extends AppCompatActivity {
                 Intent startIntent = new Intent(HomeActivity.this, LogsActivity.class);
                 if (MainActivity.entries.size() > 0) {
                     startActivity(startIntent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "No logs to show!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        cardFourCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(HomeActivity.this, RecordsActivity.class);
+                startActivity(startIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 

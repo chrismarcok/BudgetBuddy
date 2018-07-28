@@ -17,6 +17,7 @@ public class DetailActivity extends AppCompatActivity {
         detailActivityTextView = (TextView) findViewById(R.id.detailActivityTextView);
         Intent in = getIntent();
         int index = in.getIntExtra("com.example.chris.mysqliteproject.ITEM_INDEX", -1);
+        Entry thisEntry = MainActivity.entries.get(index);
 
 
         detailActivityTextView.setText(String.valueOf(index));
