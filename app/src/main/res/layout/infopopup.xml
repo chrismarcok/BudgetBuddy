@@ -3,35 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="350dp"
-    android:layout_height="75dp"
+    android:layout_height="90dp"
     android:background="@color/lightgray"
     android:padding="7dp"
     android:layout_gravity="center"
     >
-
-
-        <TextView
-            android:id="@+id/infoTxtClose"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:text="X"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_gravity="end"
-            android:background="@drawable/circlebackgroundpurple"
-
-            />
-        <TextView
-            android:text="@string/info"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            />
-
-
-
-
-
+    <TextView
+        android:id="@+id/infoTxtClose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="X"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="end"
+        android:background="@drawable/circlebackgroundpurple"
+        />
+    <TextView
+        android:text="@string/info"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
 </LinearLayout>

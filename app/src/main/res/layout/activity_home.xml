@@ -45,7 +45,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circlebackgroundpurple"
                     android:padding="10dp"
-
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/ic_control_point_black_24dp"/>
 
                 <TextView
@@ -90,6 +90,7 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/circlebackgroundpink"
                     android:padding="10dp"
                     android:src="@drawable/ic_lightbulb_outline_black_24dp" />
@@ -142,6 +143,7 @@
                 <ImageView
                     android:layout_height="64dp"
                     android:layout_width="64dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/circlebackgroundgreen"
                     android:src="@drawable/ic_format_list_bulleted_black_24dp"
                     android:padding="10dp"/>
@@ -184,6 +186,7 @@
                 <ImageView
                     android:layout_height="64dp"
                     android:layout_width="64dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/circlebackgroundyellow"
                     android:src="@drawable/ic_assignment_turned_in_black_24dp"
                     android:padding="10dp"/>
@@ -232,6 +235,7 @@
                 <ImageView
                     android:layout_height="64dp"
                     android:layout_width="64dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/circlebackgroundlightblue"
                     android:src="@drawable/ic_settings_black_24dp"
                     android:padding="10dp"/>
@@ -272,6 +276,7 @@
                 <ImageView
                     android:layout_height="64dp"
                     android:layout_width="64dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/circlebackgroundpink"
                     android:src="@drawable/ic_spa_black_24dp"
                     android:padding="10dp"/>

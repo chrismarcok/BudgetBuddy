@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,19 +15,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class FirstTimeInfoActivity extends AppCompatActivity {
 
     Button onwardsButton;
     Spinner timePeriodSpinner;
     RadioButton saveMoneyRadioButton;
     RadioButton maintainABudgetRadioButton;
+    EditText budgetEditText;
 
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String PERFORMED_FIRST_TIME_SETUP = "hasPerformedFirstTimeSetup";
-    public static final String FIRST_NAME = "firstName";
-    public static final String LAST_NAME = "lastName";
-    public static final String TIME_PERIOD = "timePeriod";
-    public static final String SAVE_MONEY = "saveMoney";
     public String firstName;
     public String lastName;
 
@@ -37,8 +40,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Upload your info to Skynet");
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        budgetEditText = (EditText) findViewById(R.id.budgetEditText);
         onwardsButton = (Button) findViewById(R.id.onwardsButton);
         final EditText firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
         final EditText lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
@@ -56,29 +58,45 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
         if (getIntent().hasExtra("com.example.chris.mysqliteproject.INFO")){
             onwardsButton.setText("Save Settings");
             getSupportActionBar().setTitle("Settings");
-            firstNameEditText.setText(sharedPreferences.getString(FIRST_NAME, "unnamed"));
-            lastNameEditText.setText(sharedPreferences.getString(LAST_NAME, "unnamed"));
-            if(sharedPreferences.getBoolean(SAVE_MONEY, true)){
-                saveMoneyRadioButton.setChecked(true);
-                maintainABudgetRadioButton.setChecked(false);
-            }
-            else{
-                saveMoneyRadioButton.setChecked(false);
-                maintainABudgetRadioButton.setChecked(true);
-            }
-            String time = sharedPreferences.getString(TIME_PERIOD, "24 Hours");
-            for(int i= 0; i < timePeriodSpinner.getAdapter().getCount(); i++)
-            {
-                if(timePeriodSpinner.getAdapter().getItem(i).toString().contains(time))
-                {
-                    timePeriodSpinner.setSelection(i);
+
+            try{
+                String message = "";
+                FileInputStream fileInputStream = openFileInput("user_info");
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuffer stringBuffer = new StringBuffer();
+                while ((message = bufferedReader.readLine()) != null){
+                    stringBuffer.append(message);
                 }
+                String result = stringBuffer.toString();
+                String strArr[] = result.split(",");
+
+                firstNameEditText.setText(strArr[0]);
+                lastNameEditText.setText(strArr[1]);
+
+                if(Boolean.parseBoolean(strArr[2])){
+                    saveMoneyRadioButton.setChecked(true);
+                    maintainABudgetRadioButton.setChecked(false);
+                }
+                else{
+                    saveMoneyRadioButton.setChecked(false);
+                    maintainABudgetRadioButton.setChecked(true);
+                }
+                for(int i= 0; i < timePeriodSpinner.getAdapter().getCount(); i++)
+                {
+                    if(timePeriodSpinner.getAdapter().getItem(i).toString().contains(strArr[3]))
+                    {
+                        timePeriodSpinner.setSelection(i);
+                    }
+                }
+                budgetEditText.setText(strArr[4]);
+
+            } catch (FileNotFoundException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
             }
         }
-
-
-
-
 
         onwardsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +105,41 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                 firstName = firstNameEditText.getText().toString();
                 lastName = lastNameEditText.getText().toString();
                 String resetTimePeriod = timePeriodSpinner.getSelectedItem().toString();
+                String budget = budgetEditText.getText().toString();
 
-                if (!firstName.equals("") && !lastName.equals("") && (saveMoneyRadioButton.isChecked() || maintainABudgetRadioButton.isChecked())){
-                    editor.putBoolean(PERFORMED_FIRST_TIME_SETUP, true);
-                    editor.putString(FIRST_NAME, firstName);
-                    editor.putString(LAST_NAME, lastName);
-                    editor.putString(TIME_PERIOD, resetTimePeriod);
-                    editor.putBoolean(SAVE_MONEY, saveMoneyRadioButton.isChecked());
-                    editor.apply();
+                if (!firstName.equals("") &&
+                        !lastName.equals("") &&
+                        (saveMoneyRadioButton.isChecked() || maintainABudgetRadioButton.isChecked()) &&
+                        !budget.equals("")){
+
+                    //STORE AS:
+                    /*
+                    user_info
+
+                        firstnameString,secondnameString,saveMoneyBool,budgetResetString,budgetFloat
+
+                     */
+                    float budgetFloat = Float.parseFloat(budget);
+                    HomeActivity.thisUser = new User(firstName, lastName, saveMoneyRadioButton.isChecked(), resetTimePeriod, budgetFloat);
+
+                    String message = "" + HomeActivity.thisUser.getFirstName() + "," +
+                            HomeActivity.thisUser.getLastName() + "," +
+                            HomeActivity.thisUser.isSaveMoney() + "," +
+                            HomeActivity.thisUser.getTimePeriod() + "," +
+                            HomeActivity.thisUser.getBudget();
+
+                    String file_name = "user_info";
+                    try {
+                        FileOutputStream fileOutputStream = openFileOutput(file_name, MODE_PRIVATE);
+                        fileOutputStream.write(message.getBytes());
+                        fileOutputStream.close();
+                        Toast.makeText(getApplicationContext(), "User Info Saved/Updated", Toast.LENGTH_SHORT).show();
+
+                    } catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Intent startMainActivity = new Intent(FirstTimeInfoActivity.this, HomeActivity.class);
                     startActivity(startMainActivity);
                     FirstTimeInfoActivity.this.finish();

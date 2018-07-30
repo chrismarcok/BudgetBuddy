@@ -24,11 +24,8 @@ public class MainActivity extends AppCompatActivity {
     TextView previouslyInitTextView;
     Button previouslyInitButton;
 
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
-    public static final String FIRST_NAME = "firstName";
-
     public static ArrayList<Entry> entries = new ArrayList<>();
+
 
 
     @Override
@@ -52,30 +49,9 @@ public class MainActivity extends AppCompatActivity {
         //print the info in the SQLite table upon creating activity
         printDatabase();
 
-        //region SharedPreferences
-        final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        String firstName = sharedPreferences.getString(FIRST_NAME, "unnamed");
+        String firstName = HomeActivity.thisUser.getFirstName();
         welcomeTextView.setText("Welcome, " + firstName + ".");
 
-        boolean value = sharedPreferences.getBoolean(TEXT, false);
-        if (value){
-            previouslyInitButton.setEnabled(false);
-            previouslyInitTextView.setText("The button has been previously pressed");
-        }
-
-        previouslyInitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editor.putBoolean(TEXT, true);
-                editor.apply();
-                previouslyInitTextView.setText("The button has been previously pressed");
-                previouslyInitButton.setEnabled(false);
-            }
-        });
-
-        //endregion
 
         //region Button Onclicks
 

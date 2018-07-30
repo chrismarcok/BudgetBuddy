@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     CardView cardSixCardView;
     MyDBHandler dbHandler;
 
+    public static User thisUser = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
+        loadThisUser();
         dbHandler = new MyDBHandler(this, null, null, 1);
         dbHandler.fetchDatabaseEntries();
 
@@ -156,6 +162,29 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         infoDialog.show();
+    }
+
+    public void loadThisUser() {
+        try {
+            String message = "";
+            FileInputStream fileInputStream = openFileInput("user_info");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer = new StringBuffer();
+            while ((message = bufferedReader.readLine()) != null) {
+                stringBuffer.append(message);
+            }
+            String result = stringBuffer.toString();
+            String strArr[] = result.split(",");
+
+            thisUser.setFirstName(strArr[0]);
+            thisUser.setLastName(strArr[1]);
+            thisUser.setSaveMoney(Boolean.parseBoolean(strArr[2]));
+            thisUser.setTimePeriod(strArr[3]);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 //    public void showConfirmPopUp(View v){

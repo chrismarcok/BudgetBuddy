@@ -21,8 +21,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_DATE = "_date";
     public static final String COLUMN_DETAILS = "_details";
     public static final String COLUMN_LOCATION = "_location";
-    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-    public static final DateFormat DATE_FORMAT_NO_SEC = new SimpleDateFormat("yyyy-mm-dd hh:mm");
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public static final DateFormat DATE_FORMAT_NO_SEC = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);

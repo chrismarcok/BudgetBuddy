@@ -9,15 +9,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private final int SLEEP_TIMER = 1000;
-    TextView splashTextView;
     ImageView splashImageView;
-
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String PERFORMED_FIRST_TIME_SETUP = "hasPerformedFirstTimeSetup";
-    public static boolean hasPerformedFirstTimeSetup;
 
 
     @Override
@@ -31,9 +32,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         getSupportActionBar().hide();
 
-        //
-
-
         splashImageView = (ImageView) findViewById(R.id.splashImageView);
         LogoLauncher logoLauncher = new LogoLauncher();
         logoLauncher.start();
@@ -41,9 +39,24 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private class LogoLauncher extends Thread{
         public void run(){
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            hasPerformedFirstTimeSetup = sharedPreferences.getBoolean(PERFORMED_FIRST_TIME_SETUP, false);
+            String message = "";
+
+            try {
+                FileInputStream fileInputStream = openFileInput("user_info");
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuffer stringBuffer = new StringBuffer();
+                while ((message = bufferedReader.readLine()) != null){
+                    stringBuffer.append(message);
+                }
+                message = stringBuffer.toString();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
 
             try{
                 sleep(SLEEP_TIMER);
@@ -52,15 +65,13 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
             Intent startIntent;
             //If the app has never been run before, create a firstTimeActivity instead of passing to normal MainActivity
-            if (!hasPerformedFirstTimeSetup){
+            if (message.equals("")){
                 startIntent = new Intent(SplashScreenActivity.this, FirstTimeActivity.class);
             }
             else{
                 startIntent = new Intent(SplashScreenActivity.this, HomeActivity.class);
             }
 
-            //DEBUGGING
-            //startIntent = new Intent(SplashScreenActivity.this, HomeActivity.class);
 
             startActivity(startIntent);
             SplashScreenActivity.this.finish(); //destroy activity so back button doesnt work
