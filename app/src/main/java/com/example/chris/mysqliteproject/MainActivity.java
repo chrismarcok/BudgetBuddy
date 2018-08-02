@@ -17,14 +17,12 @@ public class MainActivity extends AppCompatActivity {
     Button removeButton;
     EditText inputEditText;
     TextView resultsTextView;
-    MyDBHandler dbHandler;
+    TagDBHandler dbHandler;
     Button secondActivityButton;
     TextView welcomeTextView;
 
     TextView previouslyInitTextView;
     Button previouslyInitButton;
-
-    public static ArrayList<Entry> entries = new ArrayList<>();
 
 
 
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         removeButton = (Button) findViewById(R.id.removeButton);
         inputEditText = (EditText) findViewById(R.id.amountEditText);
         resultsTextView = (TextView) findViewById(R.id.resultsTextView);
-        dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler = new TagDBHandler(this, null, null, 1);
         secondActivityButton = (Button) findViewById(R.id.secondActivityButton);
         previouslyInitTextView = (TextView) findViewById(R.id.previouslyInitTextView);
         previouslyInitButton = (Button) findViewById(R.id.previouslyInitButton);
@@ -67,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(getApplicationContext(), SecondActivity.class);
-                startIntent.putExtra("com.example.chris.mysqliteproject.INFO", "This information was passed from the first activity.");
                 startActivity(startIntent);
             }
         });

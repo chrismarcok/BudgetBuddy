@@ -1,5 +1,6 @@
 package com.example.chris.mysqliteproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class LogsActivity extends AppCompatActivity {
         logsListView = (ListView) findViewById(R.id.logsListView);
 
         //Populate Arrays
-        int numEntries = MainActivity.entries.size();
+        int numEntries = HomeActivity.entries.size();
 
         items = new String[numEntries];
         amounts = new String[numEntries];
@@ -33,7 +34,7 @@ public class LogsActivity extends AppCompatActivity {
         locations = new String[numEntries];
 
         for (int i = 0; i < numEntries; i++){
-            Entry e = MainActivity.entries.get(i);
+            Entry e = HomeActivity.entries.get(i);
             items[i] = MyDBHandler.DATE_FORMAT.format(e.get_date());
             amounts[i] = "$" + String.format("%.2f", e.get_value());
             if (e.get_location().equals("")){
@@ -60,10 +61,11 @@ public class LogsActivity extends AppCompatActivity {
                 Intent showDetailActivity = new Intent(getApplicationContext(), DetailActivity.class);
                 showDetailActivity.putExtra("com.example.chris.mysqliteproject.ITEM_INDEX", i);
                 startActivity(showDetailActivity);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }
-
+    @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

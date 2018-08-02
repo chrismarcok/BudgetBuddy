@@ -1,5 +1,6 @@
 package com.example.chris.mysqliteproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,14 @@ public class DetailActivity extends AppCompatActivity {
         detailActivityTextView = (TextView) findViewById(R.id.detailActivityTextView);
         Intent in = getIntent();
         int index = in.getIntExtra("com.example.chris.mysqliteproject.ITEM_INDEX", -1);
-        Entry thisEntry = MainActivity.entries.get(index);
+        Entry thisEntry = HomeActivity.entries.get(index);
 
 
         detailActivityTextView.setText(String.valueOf(index));
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

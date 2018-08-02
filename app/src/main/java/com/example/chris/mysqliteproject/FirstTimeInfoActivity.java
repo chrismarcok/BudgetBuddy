@@ -1,5 +1,6 @@
 package com.example.chris.mysqliteproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,13 +33,14 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
 
     public String firstName;
     public String lastName;
+    Context c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_time_info);
 
-        getSupportActionBar().setTitle("Upload your info to Skynet");
+        getSupportActionBar().setTitle("Create a Budget");
 
         budgetEditText = (EditText) findViewById(R.id.budgetEditText);
         onwardsButton = (Button) findViewById(R.id.onwardsButton);
@@ -53,7 +55,10 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
 
         saveMoneyRadioButton = (RadioButton) findViewById(R.id.saveMoneyRadioButton);
         maintainABudgetRadioButton = (RadioButton) findViewById(R.id.maintainABudgetRadioButton);
-        saveMoneyRadioButton.setChecked(true);
+        maintainABudgetRadioButton.setChecked(true);
+        saveMoneyRadioButton.setEnabled(false);
+
+        c = this;
 
         if (getIntent().hasExtra("com.example.chris.mysqliteproject.INFO")){
             onwardsButton.setText("Save Settings");
@@ -112,6 +117,30 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         (saveMoneyRadioButton.isChecked() || maintainABudgetRadioButton.isChecked()) &&
                         !budget.equals("")){
 
+                        String m = "";
+
+                        try {
+                            FileInputStream fileInputStream = openFileInput("user_info");
+                            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+                            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                            StringBuffer stringBuffer = new StringBuffer();
+                            while ((m = bufferedReader.readLine()) != null){
+                                stringBuffer.append(m);
+                            }
+                            m = stringBuffer.toString();
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
+                        if (m.equals("")){
+                            TagDBHandler tagDBHandler = new TagDBHandler(c, null, null, 1);
+                            tagDBHandler.addEntry(new Tag(-1,"red", "supermarket"));
+                            tagDBHandler.addEntry(new Tag(-1,"blue", "entertainment"));
+                            tagDBHandler.addEntry(new Tag(-1,"green", "clothing"));
+                        }
+
                     //STORE AS:
                     /*
                     user_info
@@ -151,6 +180,13 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        c = this;
+    }
+
     @Override
     public void finish(){
         super.finish();

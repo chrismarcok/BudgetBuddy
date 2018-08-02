@@ -114,12 +114,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-        <RadioButton
-            android:id="@+id/saveMoneyRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Save Money" />
+
 
         <RadioButton
             android:id="@+id/maintainABudgetRadioButton"
@@ -129,6 +124,12 @@
             android:text="Maintain a Budget"
             tools:layout_editor_absoluteX="138dp"
             tools:layout_editor_absoluteY="257dp" />
+        <RadioButton
+            android:id="@+id/saveMoneyRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Save Money" />
     </RadioGroup>
 
     <Spinner

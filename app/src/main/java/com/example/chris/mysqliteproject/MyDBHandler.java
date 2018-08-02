@@ -81,7 +81,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
 
         Cursor c = db.rawQuery(query, null);
-        MainActivity.entries.clear();
+        HomeActivity.entries.clear();
         c.moveToFirst();
         while (!c.isAfterLast()){
             if(c.getString(c.getColumnIndex(COLUMN_VALUE)) != null){
@@ -117,7 +117,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         String query = "SELECT * FROM " + TABLE_ENTRIES + ";";
 
         Cursor c = db.rawQuery(query, null);
-        MainActivity.entries.clear();
+        HomeActivity.entries.clear();
         c.moveToFirst();
         while (!c.isAfterLast()){
             if(c.getString(c.getColumnIndex(COLUMN_VALUE)) != null){
@@ -136,7 +136,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                         c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate,
                         c.getString(c.getColumnIndex(COLUMN_LOCATION)), c.getString(c.getColumnIndex(COLUMN_DETAILS)));
 
-                MainActivity.entries.add(e);
+                HomeActivity.entries.add(e);
 
             }
             c.moveToNext();
