@@ -15,6 +15,7 @@ public class LogsActivity extends AppCompatActivity {
     String[] amounts;
     String[] details;
     String[] locations;
+    Boolean[] newBool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,26 +33,33 @@ public class LogsActivity extends AppCompatActivity {
         amounts = new String[numEntries];
         details = new String[numEntries];
         locations = new String[numEntries];
+        newBool = new Boolean[numEntries];
 
         for (int i = 0; i < numEntries; i++){
             Entry e = HomeActivity.entries.get(i);
             items[i] = MyDBHandler.DATE_FORMAT.format(e.get_date());
-            amounts[i] = "$" + String.format("%.2f", e.get_value());
+            if (e.get_value() < 0){
+                amounts[i] = "-$" + String.format("%.2f", -e.get_value());
+            }
+            else {
+                amounts[i] = "$" + String.format("%.2f", e.get_value());
+            }
             if (e.get_location().equals("")){
-                locations[i] = "N/A";
+                locations[i] = "No Location";
             }
             else {
                 locations[i] = e.get_location();
             }
             if (e.get_details().equals("")){
-                details[i] = "N/A";
+                details[i] = "No Details";
             }
             else {
                 details[i] = e.get_details();
             }
+            newBool[i] = HomeActivity.now.getTime() - e.get_date().getTime() < 1000 * 60 * 60; //1000ms * 60sec * 60min = 1 Hour
         }
 
-        ItemAdapter itemAdapter = new ItemAdapter(this, items, amounts, details, locations);
+        ItemAdapter itemAdapter = new ItemAdapter(this, items, amounts, details, locations, newBool);
         logsListView.setAdapter(itemAdapter);
 
 

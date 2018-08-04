@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -43,11 +44,13 @@ public class HomeActivity extends AppCompatActivity {
     TextView resetTimeLeftEditText;
     SwipeRefreshLayout swipe;
 
+
+
     float amountSpent = 0;
     public static ArrayList<Entry> entries = new ArrayList<>();
     public static User thisUser = new User();
     public static ArrayList<Tag> tags = new ArrayList<>();
-
+    public static Date now;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
-        loadThisUser();
+
         dbHandler = new MyDBHandler(this, null, null, 1);
         dbHandler.fetchDatabaseEntries();
 
@@ -90,6 +93,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, MainActivity.class);
                 startActivity(startIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -157,18 +161,41 @@ public class HomeActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String amountString =  amountEditText.getText().toString();
-                if (amountString.equals("")){
-                    Toast.makeText(getApplicationContext(), "One or more required fields is empty!", Toast.LENGTH_SHORT).show();
+                Boolean canParse = false;
+                Date inputDate = new Date();
+                if (!dateEditText.getText().toString().equals("")){
+                    try {
+                        inputDate = MyDBHandler.DATE_FORMAT_NO_TIME.parse(dateEditText.getText().toString());
+                        canParse = true;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        inputDate = MyDBHandler.DATE_FORMAT_NO_TIME_SPACES.parse(dateEditText.getText().toString());
+                        canParse = true;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        inputDate = MyDBHandler.DATE_FORMAT_NO_TIME_SLASHES.parse(dateEditText.getText().toString());
+                        canParse = true;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (!dateEditText.getText().toString().equals("") && !canParse){
+                    Toast.makeText(getApplicationContext(), "Could not parse date!", Toast.LENGTH_SHORT).show();
+                }
+                else if (amountString.equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter an amount!", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Date now = new Date();
                     Float amountFloat = Float.parseFloat(amountString);
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
 
-
-                    Entry newEntry = new Entry(amountFloat, now, locationEditText.getText().toString(), detailsEditText.getText().toString());
+                    Entry newEntry = new Entry(amountFloat, inputDate, locationEditText.getText().toString(), detailsEditText.getText().toString());
                     dbHandler.addEntry(newEntry);
                     Toast.makeText(getApplicationContext(), "Entry added", Toast.LENGTH_SHORT).show();
                     dbHandler.fetchDatabaseEntries();
@@ -190,6 +217,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        now = new Date();
         refresh();
     }
 
@@ -221,10 +249,25 @@ public class HomeActivity extends AppCompatActivity {
             String result = stringBuffer.toString();
             String strArr[] = result.split(",");
 
+            Date appCreatedDate = new Date();
+            Date budgetStartDate = new Date();
+            Date nextBudgetDate = new Date();
+            try {
+                appCreatedDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(strArr[5]);
+                budgetStartDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(strArr[6]);
+                nextBudgetDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(strArr[7]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             thisUser.setFirstName(strArr[0]);
             thisUser.setLastName(strArr[1]);
             thisUser.setSaveMoney(Boolean.parseBoolean(strArr[2]));
             thisUser.setTimePeriod(strArr[3]);
+            thisUser.setBudget(Float.parseFloat(strArr[4]));
+            thisUser.setAppSetupDate(appCreatedDate);
+            thisUser.setCurrentBudgetStartDate(budgetStartDate);
+            thisUser.setNextBudgetStartDate(nextBudgetDate);
 
         } catch (IOException e){
             e.printStackTrace();
@@ -235,37 +278,7 @@ public class HomeActivity extends AppCompatActivity {
         underOverTextView = (TextView) findViewById(R.id.underOverTextView);
         resetTimeLeftEditText = (TextView) findViewById(R.id.resetTimeLeftEditText);
         dbHandler.fetchDatabaseEntries();
-        try{
-            String message = "";
-            FileInputStream fileInputStream = openFileInput("user_info");
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer = new StringBuffer();
-            while ((message = bufferedReader.readLine()) != null){
-                stringBuffer.append(message);
-            }
-            //STORE AS:
-            /*
-            user_info
-
-                firstnameString,secondnameString,saveMoneyBool,budgetResetString,budgetFloat
-
-             */
-            String result = stringBuffer.toString();
-            String strArr[] = result.split(",");
-
-            thisUser.setFirstName(strArr[0]);
-            thisUser.setLastName(strArr[1]);
-            thisUser.setSaveMoney(Boolean.parseBoolean(strArr[2]));
-            thisUser.setTimePeriod(strArr[3]);
-            thisUser.setBudget(Float.parseFloat(strArr[4]));
-
-
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        loadThisUser();
         amountSpent = getAmountSpent();
         float num = thisUser.getBudget() - amountSpent;
 
@@ -291,7 +304,22 @@ public class HomeActivity extends AppCompatActivity {
             budgetNumTextView.setTextColor(getResources().getColor(R.color.green));
         }
         underOverTextView.setText(underOver);
-        resetTimeLeftEditText.setText("Resets in " + thisUser.getTimePeriod());
+
+        Long millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - new Date().getTime();
+        String value = "";
+        if (millisecondsLeft < 60000){ //if there is less than a minute left, show seconds
+            value = String.valueOf(millisecondsLeft/1000) + " sec(s)";
+        } else if (millisecondsLeft < 3600000){ // If there is less than an hour left, show minutes
+            value = String.valueOf(millisecondsLeft/1000/60) + " min(s)";
+        } else if (millisecondsLeft < 86400000){ //if there is less than a day left, show hours
+            value = String.valueOf(millisecondsLeft/1000/60/60) + " hr(s)";
+        } else if (millisecondsLeft < 604800000){ //if there is less than a week left, show days
+            value = String.valueOf(millisecondsLeft/1000/60/60/24) + " day(s)";
+        } else{ // else show weeks
+            value = String.valueOf(millisecondsLeft/1000/60/60/24/7) + " week(s)";
+        }
+
+        resetTimeLeftEditText.setText("Resets in "+ value);
     }
 
     private float getAmountSpent(){
@@ -302,29 +330,6 @@ public class HomeActivity extends AppCompatActivity {
         return x;
     }
 
-//    public void showConfirmPopUp(View v){
-//        confirmDialog.setContentView(R.layout.confirmpopup);
-//        TextView confirmTxtClose;
-//        TextView okayTextView;
-//
-//        okayTextView = (TextView) findViewById(R.id.okayTextView);
-//        confirmTxtClose = (TextView) findViewById(R.id.confirmTxtClose);
-//
-//        okayTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-//        confirmTxtClose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                confirmDialog.dismiss();
-//            }
-//        });
-//
-//        confirmDialog.show();
-//    }
     /*
     private void disableEditText(EditText editText) {
         editText.setFocusable(false);
