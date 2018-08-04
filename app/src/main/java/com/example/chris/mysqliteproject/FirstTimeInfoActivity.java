@@ -89,10 +89,10 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                 String result = stringBuffer.toString();
                 String strArr[] = result.split(",");
 
-                firstNameEditText.setText(strArr[0]);
-                lastNameEditText.setText(strArr[1]);
+                firstNameEditText.setText(strArr[FIRST_NAME]);
+                lastNameEditText.setText(strArr[LAST_NAME]);
 
-                if(Boolean.parseBoolean(strArr[2])){
+                if(Boolean.parseBoolean(strArr[SAVE_MONEY])){
                     saveMoneyRadioButton.setChecked(true);
                     maintainABudgetRadioButton.setChecked(false);
                 }
@@ -107,7 +107,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         timePeriodSpinner.setSelection(i);
                     }
                 }
-                budgetEditText.setText(strArr[4]);
+                budgetEditText.setText(strArr[BUDGET]);
 
             } catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -165,54 +165,22 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         Date nextBudgetDate = new Date();
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(nextBudgetDate);
-                        if (resetTimePeriod.equals("24 Hours")){
-                            cal.add(Calendar.DATE, 1);
-                        } else if (resetTimePeriod.equals("15 Seconds")) {
-                            cal.add(Calendar.SECOND, 15);
-                        } else if (resetTimePeriod.equals("3 Days")){
-                            cal.add(Calendar.DATE, 3);
-                        } else if (resetTimePeriod.equals("1 Week")){
-                            cal.add(Calendar.DATE, 7);
-                        } else if (resetTimePeriod.equals("2 Weeks")){
-                            cal.add(Calendar.DATE, 14);
-                        } else if (resetTimePeriod.equals("1 Month")){
-                            cal.add(Calendar.MONTH, 1);
-                        } else if (resetTimePeriod.equals("3 Months")){
-                            cal.add(Calendar.MONTH, 3);
-                        } else {
-                            cal.add(Calendar.YEAR, 1);
-                        }
+                        createNextBudgetDate(cal, resetTimePeriod);
                         nextBudgetDate = cal.getTime();
 
                         HomeActivity.thisUser = new User(firstName, lastName, saveMoneyRadioButton.isChecked(), resetTimePeriod, budgetFloat, new Date(), new Date(), nextBudgetDate);
                     }
                     else{ //THIS USER HAS BEEN PREVIOUSLY CREATED
                         String[] mArray = m.split(",");
-                        if (!budget.equals(mArray[4]) || !resetTimePeriod.equals(mArray[3])){ //IF there is a change between this budget and last budget
+                        if (!budget.equals(mArray[BUDGET]) || !resetTimePeriod.equals(mArray[BUDGET_RESET])){ //IF there is a change between this budget and last budget
                             Date nextBudgetDate = new Date();
                             Calendar cal = Calendar.getInstance();
                             cal.setTime(nextBudgetDate);
-                            if (resetTimePeriod.equals("24 Hours")){
-                                cal.add(Calendar.DATE, 1);
-                            } else if (resetTimePeriod.equals("15 Seconds")) {
-                                cal.add(Calendar.SECOND, 15);
-                            } else if (resetTimePeriod.equals("3 Days")){
-                                cal.add(Calendar.DATE, 3);
-                            } else if (resetTimePeriod.equals("1 Week")){
-                                cal.add(Calendar.DATE, 7);
-                            } else if (resetTimePeriod.equals("2 Weeks")){
-                                cal.add(Calendar.DATE, 14);
-                            } else if (resetTimePeriod.equals("1 Month")){
-                                cal.add(Calendar.MONTH, 1);
-                            } else if (resetTimePeriod.equals("3 Months")){
-                                cal.add(Calendar.MONTH, 3);
-                            } else {
-                                cal.add(Calendar.YEAR, 1);
-                            }
+                            createNextBudgetDate(cal, resetTimePeriod);
                             nextBudgetDate = cal.getTime();
                             Date appCreatedDate = new Date();
                             try{
-                                appCreatedDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[5]);
+                                appCreatedDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[APP_SETUP_DATE]);
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -224,9 +192,9 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                             Date budgetStartDate = new Date();
                             Date nextBudgetDate = new Date();
                             try {
-                                appCreatedDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[5]);
-                                budgetStartDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[6]);
-                                nextBudgetDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[7]);
+                                appCreatedDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[APP_SETUP_DATE]);
+                                budgetStartDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[CURRENT_BUDGET_START_DATE]);
+                                nextBudgetDate = MyDBHandler.DATE_FORMAT_CALENDAR.parse(mArray[NEXT_BUDGET_DATE]);
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -266,6 +234,26 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void createNextBudgetDate(Calendar cal, String resetTimePeriod){
+        if (resetTimePeriod.equals("24 Hours")){
+            cal.add(Calendar.DATE, 1);
+        } else if (resetTimePeriod.equals("15 Seconds")) {
+            cal.add(Calendar.SECOND, 15);
+        } else if (resetTimePeriod.equals("3 Days")){
+            cal.add(Calendar.DATE, 3);
+        } else if (resetTimePeriod.equals("1 Week")){
+            cal.add(Calendar.DATE, 7);
+        } else if (resetTimePeriod.equals("2 Weeks")){
+            cal.add(Calendar.DATE, 14);
+        } else if (resetTimePeriod.equals("1 Month")){
+            cal.add(Calendar.MONTH, 1);
+        } else if (resetTimePeriod.equals("3 Months")){
+            cal.add(Calendar.MONTH, 3);
+        } else {
+            cal.add(Calendar.YEAR, 1);
+        }
     }
 
     @Override
