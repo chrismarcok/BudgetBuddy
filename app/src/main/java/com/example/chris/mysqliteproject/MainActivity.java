@@ -12,6 +12,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    /*TODO
+    Show how much to maintain budget for:
+    Daily Spending
+    Weekly Spending
+    Monthly Spending
+     */
+
 
     Button addButton;
     Button removeButton;

@@ -20,10 +20,12 @@ import org.w3c.dom.Text;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
@@ -44,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView resetTimeLeftEditText;
     SwipeRefreshLayout swipe;
 
-
+    Long millisecondsLeft;
 
     float amountSpent = 0;
     public static ArrayList<Entry> entries = new ArrayList<>();
@@ -274,11 +276,17 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
     private void refresh(){
+        now = new Date();
+        loadThisUser();
+        dbHandler.fetchDatabaseEntries();
+        millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - now.getTime();
+        if (millisecondsLeft < 0){
+            createNewBudget();
+        }
         budgetNumTextView = (TextView) findViewById(R.id.budgetNumTextView);
         underOverTextView = (TextView) findViewById(R.id.underOverTextView);
         resetTimeLeftEditText = (TextView) findViewById(R.id.resetTimeLeftEditText);
-        dbHandler.fetchDatabaseEntries();
-        loadThisUser();
+
         amountSpent = getAmountSpent();
         float num = thisUser.getBudget() - amountSpent;
 
@@ -305,7 +313,8 @@ public class HomeActivity extends AppCompatActivity {
         }
         underOverTextView.setText(underOver);
 
-        Long millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - new Date().getTime();
+        millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - now.getTime();
+
         String value = "";
         if (millisecondsLeft < 60000){ //if there is less than a minute left, show seconds
             value = String.valueOf(millisecondsLeft/1000) + " sec(s)";
@@ -325,9 +334,61 @@ public class HomeActivity extends AppCompatActivity {
     private float getAmountSpent(){
         float x = 0;
         for (int i = 0; i < entries.size(); i++){
-            x += entries.get(i).get_value();
+            Entry e = entries.get(i);
+            if (e.get_date().after(thisUser.getCurrentBudgetStartDate()) && e.get_date().before(thisUser.getNextBudgetStartDate())) {
+                x += e.get_value();
+            }
         }
         return x;
+    }
+
+    private void createNewBudget(){
+        Date nextBudgetDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(nextBudgetDate);
+        String resetTimePeriod = thisUser.getTimePeriod();
+
+        if (resetTimePeriod.equals("24 Hours")){
+            cal.add(Calendar.DATE, 1);
+        } else if (resetTimePeriod.equals("15 Seconds")) {
+            cal.add(Calendar.SECOND, 15);
+        } else if (resetTimePeriod.equals("3 Days")){
+            cal.add(Calendar.DATE, 3);
+        } else if (resetTimePeriod.equals("1 Week")){
+            cal.add(Calendar.DATE, 7);
+        } else if (resetTimePeriod.equals("2 Weeks")){
+            cal.add(Calendar.DATE, 14);
+        } else if (resetTimePeriod.equals("1 Month")){
+            cal.add(Calendar.MONTH, 1);
+        } else if (resetTimePeriod.equals("3 Months")){
+            cal.add(Calendar.MONTH, 3);
+        } else {
+            cal.add(Calendar.YEAR, 1);
+        }
+        nextBudgetDate = cal.getTime();
+        String message = "" + thisUser.getFirstName() + "," +
+                thisUser.getLastName() + "," +
+                thisUser.isSaveMoney() + "," +
+                thisUser.getTimePeriod() + "," +
+                thisUser.getBudget() + "," +
+                thisUser.getAppSetupDate() + "," +
+                now + "," +
+                nextBudgetDate;
+
+        thisUser.setCurrentBudgetStartDate(now);
+        thisUser.setNextBudgetStartDate(nextBudgetDate);
+
+        String file_name = "user_info";
+        try {
+            FileOutputStream fileOutputStream = openFileOutput(file_name, MODE_PRIVATE);
+            fileOutputStream.write(message.getBytes());
+            fileOutputStream.close();
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*

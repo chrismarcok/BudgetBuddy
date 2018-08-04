@@ -167,6 +167,8 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         cal.setTime(nextBudgetDate);
                         if (resetTimePeriod.equals("24 Hours")){
                             cal.add(Calendar.DATE, 1);
+                        } else if (resetTimePeriod.equals("15 Seconds")) {
+                            cal.add(Calendar.SECOND, 15);
                         } else if (resetTimePeriod.equals("3 Days")){
                             cal.add(Calendar.DATE, 3);
                         } else if (resetTimePeriod.equals("1 Week")){
@@ -192,6 +194,8 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                             cal.setTime(nextBudgetDate);
                             if (resetTimePeriod.equals("24 Hours")){
                                 cal.add(Calendar.DATE, 1);
+                            } else if (resetTimePeriod.equals("15 Seconds")) {
+                                cal.add(Calendar.SECOND, 15);
                             } else if (resetTimePeriod.equals("3 Days")){
                                 cal.add(Calendar.DATE, 3);
                             } else if (resetTimePeriod.equals("1 Week")){

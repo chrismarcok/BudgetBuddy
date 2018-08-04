@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
+    /*TODO
+    Delete Entry
+    Update Entry
+     */
 
     TextView detailActivityTextView;
 

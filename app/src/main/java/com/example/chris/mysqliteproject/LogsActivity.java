@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+
 public class LogsActivity extends AppCompatActivity {
 
     ListView logsListView;
@@ -34,9 +38,10 @@ public class LogsActivity extends AppCompatActivity {
         details = new String[numEntries];
         locations = new String[numEntries];
         newBool = new Boolean[numEntries];
-
+        ArrayList<Entry> entries = HomeActivity.entries;
+        Collections.reverse(entries);
         for (int i = 0; i < numEntries; i++){
-            Entry e = HomeActivity.entries.get(i);
+            Entry e = entries.get(i);
             items[i] = MyDBHandler.DATE_FORMAT.format(e.get_date());
             if (e.get_value() < 0){
                 amounts[i] = "-$" + String.format("%.2f", -e.get_value());
@@ -56,7 +61,7 @@ public class LogsActivity extends AppCompatActivity {
             else {
                 details[i] = e.get_details();
             }
-            newBool[i] = HomeActivity.now.getTime() - e.get_date().getTime() < 1000 * 60 * 60; //1000ms * 60sec * 60min = 1 Hour
+            newBool[i] = (e.get_date().before(new Date()))&&(HomeActivity.now.getTime() - e.get_date().getTime() < 1000 * 60 * 60); //1000ms * 60sec * 60min = 1 Hour
         }
 
         ItemAdapter itemAdapter = new ItemAdapter(this, items, amounts, details, locations, newBool);
