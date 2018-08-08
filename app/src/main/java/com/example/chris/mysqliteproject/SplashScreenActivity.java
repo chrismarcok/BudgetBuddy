@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private final int SLEEP_TIMER = 1000;
+    private final int SLEEP_TIMER = 600;
     ImageView splashImageView;
 
 

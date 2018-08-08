@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Long millisecondsLeft;
 
-    float amountSpent = 0;
+    public static float amountSpent = 0;
     public static ArrayList<Entry> entries = new ArrayList<>();
     public static User thisUser = new User();
     public static ArrayList<Tag> tags = new ArrayList<>();
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         cardTwoCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startIntent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent startIntent = new Intent(HomeActivity.this, BudgetLeftActivity.class);
                 startActivity(startIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -185,6 +185,12 @@ public class HomeActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    try {
+                        inputDate = MyDBHandler.DATE_FORMAT.parse(dateEditText.getText().toString());
+                        canParse = true;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 if (!dateEditText.getText().toString().equals("") && !canParse){
@@ -200,7 +206,6 @@ public class HomeActivity extends AppCompatActivity {
                     Entry newEntry = new Entry(amountFloat, inputDate, locationEditText.getText().toString(), detailsEditText.getText().toString());
                     dbHandler.addEntry(newEntry);
                     Toast.makeText(getApplicationContext(), "Entry added", Toast.LENGTH_SHORT).show();
-                    dbHandler.fetchDatabaseEntries();
                     refresh();
                     myDialog.dismiss();
                 }

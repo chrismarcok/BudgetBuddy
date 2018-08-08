@@ -16,7 +16,13 @@
     <color name="white">#fff</color>>
     <color name="lightblue">#ADD8E6</color>>
     <color name="colorTransparentWhite">#cccccc</color>
-    <color name="deficit">#ff1744</color>>
+    <color name="deficit">#ff1744</color>
+
+
+    <color name="lightSeaGreen">#26a69a</color>
+    <color name="mediumSeaGreen">#009688</color>
+    <color name="darkSeaGreen">#00897b</color>
+
 
     <color name="black_overlay">#66000000</color>
 </resources>

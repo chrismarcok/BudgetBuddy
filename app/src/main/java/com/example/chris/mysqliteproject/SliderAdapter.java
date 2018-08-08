@@ -31,14 +31,14 @@ public class SliderAdapter extends PagerAdapter {
             R.drawable.circlebackgroundpurple,
     };
     public String[] slideHeadings = {
-            "Streaks",
+            "Streak",
             "Days Under Budget",
             "Total Money Saved"
     };
     public String[] slideDescs = {
-            "StreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaksStreaks",
-            "Days Under BudgetDays Under BudgetDays Under BudgetDays Under BudgetDays Under BudgetDays Under BudgetDays Under BudgetDays Under BudgetDays Under Budget",
-            "Total Money SavedTotal Money SavedTotal Money SavedTotal Money SavedTotal Money SavedTotal Money SavedTotal Money SavedTotal Money Saved"
+            String.format("You currently have a %d day streak!\nKeep it up!", 0),
+            String.format("You've been under budget a total of %d/%d days!\nWay to go!", 1, 2),
+            String.format("You've currently saved a total of $%s using BudgetBuddy!\nTalk about savings!", String.format("%.2f",123.2f))
     };
 
     @Override

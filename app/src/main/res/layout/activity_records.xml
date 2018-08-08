@@ -10,7 +10,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/slideViewPager"
         android:layout_width="match_parent"
-        android:layout_height="1400px"></android.support.v4.view.ViewPager>
+        android:layout_height="600dp"></android.support.v4.view.ViewPager>
 
     <View
         android:layout_width="52dp"

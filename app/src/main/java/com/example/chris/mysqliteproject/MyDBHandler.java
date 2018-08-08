@@ -77,6 +77,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     }
 
+    public void updateEntry(Entry e){
+        SQLiteDatabase db = getWritableDatabase();
+        //UPDATE entries SET _id = 123 WHERE _id = 0;
+        db.execSQL("UPDATE " + TABLE_ENTRIES + " SET " +
+                COLUMN_VALUE + " = " + e.get_value() + ", " +
+                COLUMN_DATE + " = \"" + DATE_FORMAT.format(e.get_date()) + "\", " +
+                COLUMN_LOCATION + " = \"" + e.get_location() + "\", " +
+                COLUMN_DETAILS + " = \"" + e.get_details() + "\"" +
+                " WHERE " + COLUMN_ID + " = " + e.get_id() +";");
+        db.close();
+    }
+
+
     public String databaseToString(){
 
         String dbString = "";

@@ -67,7 +67,6 @@ public class LogsActivity extends AppCompatActivity {
         ItemAdapter itemAdapter = new ItemAdapter(this, items, amounts, details, locations, newBool);
         logsListView.setAdapter(itemAdapter);
 
-
         logsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -82,6 +81,12 @@ public class LogsActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
     }
 
 }
