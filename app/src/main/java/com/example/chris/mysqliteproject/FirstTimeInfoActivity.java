@@ -147,9 +147,9 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         }
                         if (m.equals("")){
                             TagDBHandler tagDBHandler = new TagDBHandler(c, null, null, 1);
-                            tagDBHandler.addEntry(new Tag(-1,"red", "supermarket"));
-                            tagDBHandler.addEntry(new Tag(-1,"blue", "entertainment"));
-                            tagDBHandler.addEntry(new Tag(-1,"green", "clothing"));
+                            tagDBHandler.addEntry(new Tag("#FF0000", "Supermarket"));
+                            tagDBHandler.addEntry(new Tag("#00FF00", "Entertainment"));
+                            tagDBHandler.addEntry(new Tag("#0000FF", "Clothing"));
                         }
 
                     //STORE AS:

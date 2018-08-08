@@ -57,6 +57,16 @@ public class TagDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    public void updateEntry(Tag t){
+        SQLiteDatabase db = getWritableDatabase();
+        //UPDATE entries SET _id = 123 WHERE _id = 0;
+        db.execSQL("UPDATE " + TABLE_TAGS + " SET " +
+                COLUMN_COLOR + " = \"" + t.getCol() + "\", " +
+                COLUMN_TEXT + " = \"" + t.getText() + "\" " +
+                " WHERE " + COLUMN_ID + " = " + t.getId() +";");
+        db.close();
+    }
+
     public void dequeue(){
         SQLiteDatabase db = getWritableDatabase();
 
@@ -73,7 +83,7 @@ public class TagDBHandler extends SQLiteOpenHelper{
 
 
         Cursor c = db.rawQuery(query, null);
-        HomeActivity.entries.clear();
+        HomeActivity.tags.clear();
         c.moveToFirst();
         while (!c.isAfterLast()){
             if(c.getString(c.getColumnIndex(COLUMN_COLOR)) != null){
@@ -98,7 +108,7 @@ public class TagDBHandler extends SQLiteOpenHelper{
 
 
         Cursor c = db.rawQuery(query, null);
-        HomeActivity.entries.clear();
+        HomeActivity.tags.clear();
         c.moveToFirst();
         while (!c.isAfterLast()){
             if(c.getString(c.getColumnIndex(COLUMN_COLOR)) != null){

@@ -83,10 +83,5 @@ public class LogsActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-
-    }
 
 }

@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         String firstName = HomeActivity.thisUser.getFirstName();
         welcomeTextView.setText("Welcome, " + firstName + ".");
 
+        removeButton.setEnabled(false);
 
         //region Button Onclicks
 

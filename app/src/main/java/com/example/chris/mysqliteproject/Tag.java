@@ -13,6 +13,10 @@ public class Tag {
         _text = text;
         _col = col;
     }
+    public Tag(String col, String text){
+        _text = text;
+        _col = col;
+    }
 
     public Tag(){
 

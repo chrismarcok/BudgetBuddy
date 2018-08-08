@@ -39,7 +39,10 @@ public class HomeActivity extends AppCompatActivity {
     CardView cardFourCardView;
     CardView cardFiveCardView;
     CardView cardSixCardView;
+    CardView cardSevenCardView;
+    CardView cardEightCardView;
     MyDBHandler dbHandler;
+    TagDBHandler tagDBHandler;
 
     TextView budgetNumTextView;
     TextView underOverTextView;
@@ -48,11 +51,11 @@ public class HomeActivity extends AppCompatActivity {
 
     Long millisecondsLeft;
 
-    public static float amountSpent = 0;
     public static ArrayList<Entry> entries = new ArrayList<>();
-    public static User thisUser = new User();
     public static ArrayList<Tag> tags = new ArrayList<>();
+    public static User thisUser = new User();
     public static Date now;
+    public static float amountSpent = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,8 @@ public class HomeActivity extends AppCompatActivity {
 
         dbHandler = new MyDBHandler(this, null, null, 1);
         dbHandler.fetchDatabaseEntries();
+        tagDBHandler = new TagDBHandler(this, null, null, 1);
+        tagDBHandler.fetchDatabaseEntries();
 
         myDialog = new Dialog(this);
 
@@ -78,6 +83,8 @@ public class HomeActivity extends AppCompatActivity {
         cardFourCardView = (CardView) findViewById(R.id.cardFourCardView);
         cardFiveCardView = (CardView) findViewById(R.id.cardFiveCardView);
         cardSixCardView =(CardView) findViewById(R.id.cardSixCardView);
+        cardSevenCardView = (CardView) findViewById(R.id.cardSevenCardView);
+        cardEightCardView =(CardView) findViewById(R.id.cardEightCardView);
 
         swipe = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
@@ -124,13 +131,29 @@ public class HomeActivity extends AppCompatActivity {
         cardFiveCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent startIntent = new Intent(HomeActivity.this, TagsActivity.class);
+                startActivity(startIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+        cardSixCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startIntent = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(startIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+        cardSevenCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, FirstTimeInfoActivity.class);
                 startIntent.putExtra("com.example.chris.mysqliteproject.INFO", "a");
                 startActivity(startIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
-        cardSixCardView.setOnClickListener(new View.OnClickListener() {
+        cardEightCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, SecondActivity.class);
@@ -284,6 +307,7 @@ public class HomeActivity extends AppCompatActivity {
         now = new Date();
         loadThisUser();
         dbHandler.fetchDatabaseEntries();
+        tagDBHandler.fetchDatabaseEntries();
         millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - now.getTime();
         if (millisecondsLeft < 0){
             createNewBudget();

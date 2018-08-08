@@ -2,4 +2,4 @@
 
 Creating a Budgeting App with AndroidStudio and SQLite. First time using Git Bash to update my project on Github.
 
-Designed and Implemented by Chris Marcok.
+Designed and developed by Chris Marcok in 2018.

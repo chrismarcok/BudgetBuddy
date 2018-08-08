@@ -5,9 +5,9 @@
     <color name="backgroundcolor">#fcfcfc</color>
     <color name="lightgray">#ededed</color>
     <color name="deeppurple">#7c4dff</color>
-    <color name="yello">#ffb300</color>
+    <color name="yello">#fb8c00</color>
     <color name="green">#00bfa5</color>
-    <color name="brightlightblue">#1e88e5</color>
+    <color name="brightlightblue">#42a5f5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="darkblue">#23283a</color>
     <color name="testcolorblue">#152b38</color>
@@ -17,11 +17,13 @@
     <color name="lightblue">#ADD8E6</color>>
     <color name="colorTransparentWhite">#cccccc</color>
     <color name="deficit">#ff1744</color>
-
-
+    <color name="materialRed">#ff867f</color>
+    <color name="softpurple">#ba68c8</color>
     <color name="lightSeaGreen">#26a69a</color>
     <color name="mediumSeaGreen">#009688</color>
     <color name="darkSeaGreen">#00897b</color>
+
+    <color name="logColor">#ffee58</color>>
 
 
     <color name="black_overlay">#66000000</color>
