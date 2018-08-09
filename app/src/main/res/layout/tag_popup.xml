@@ -67,7 +67,7 @@
 
                 android:ems="10"
                 android:hint="Ex. Clothing"
-                android:inputType="textLongMessage" />
+                android:inputType="textCapWords|textLongMessage" />
         </LinearLayout>
 
         <LinearLayout

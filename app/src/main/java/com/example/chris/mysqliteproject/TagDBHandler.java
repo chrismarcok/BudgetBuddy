@@ -19,6 +19,7 @@ public class TagDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_COLOR = "_col";
     public static final String COLUMN_TEXT = "_text";
+    public static final String COLUMN_TAG = "_tag";
 
     public TagDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);

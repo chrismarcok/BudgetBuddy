@@ -88,7 +88,7 @@ public class TagsActivity extends AppCompatActivity {
                 String colour = colourEditText.getText().toString();
                 boolean isInTagList = false;
                 for (int i = 0; i < HomeActivity.tags.size(); i++){
-                    if (title.equals(HomeActivity.tags.get(i).getText())){
+                    if (title.toLowerCase().equals(HomeActivity.tags.get(i).getText().toLowerCase())){
                         isInTagList = true;
                     }
                 }

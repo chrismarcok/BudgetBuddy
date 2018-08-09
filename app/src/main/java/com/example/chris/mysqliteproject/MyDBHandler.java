@@ -21,6 +21,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_DATE = "_date";
     public static final String COLUMN_DETAILS = "_details";
     public static final String COLUMN_LOCATION = "_location";
+    public static final String COLUMN_TAG_ID = "_tag";
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
     public static final DateFormat DATE_FORMAT_NO_SEC = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     public static final DateFormat DATE_FORMAT_NO_TIME = new SimpleDateFormat("yyyy-MM-dd");
@@ -39,7 +40,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_VALUE + " REAL, " +
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_DETAILS + " TEXT, " +
-                COLUMN_LOCATION + " TEXT" +
+                COLUMN_LOCATION + " TEXT, " +
+                COLUMN_TAG_ID + " INTEGER" +
                 ");";
 
         db.execSQL(query);
@@ -58,6 +60,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_DATE, DATE_FORMAT.format(entry.get_date()));
         values.put(COLUMN_DETAILS, entry.get_details());
         values.put(COLUMN_LOCATION, entry.get_location());
+        values.put(COLUMN_TAG_ID, entry.get_tag().getId());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ENTRIES, null, values);
         db.close();
@@ -84,7 +87,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_VALUE + " = " + e.get_value() + ", " +
                 COLUMN_DATE + " = \"" + DATE_FORMAT.format(e.get_date()) + "\", " +
                 COLUMN_LOCATION + " = \"" + e.get_location() + "\", " +
-                COLUMN_DETAILS + " = \"" + e.get_details() + "\"" +
+                COLUMN_DETAILS + " = \"" + e.get_details() + "\", " +
+                COLUMN_TAG_ID + " = \"" + e.get_tag().getId() + "\"" +
                 " WHERE " + COLUMN_ID + " = " + e.get_id() +";");
         db.close();
     }

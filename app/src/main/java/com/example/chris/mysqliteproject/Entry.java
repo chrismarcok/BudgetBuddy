@@ -10,6 +10,7 @@ public class Entry {
     private Date _date;
     private String _location;
     private float _value;
+    private Tag _tag;
 
 
     public Entry(int id, float value, Date date, String details, String location){
@@ -18,16 +19,26 @@ public class Entry {
         this._date = date;
         this._details = details;
         this._location = location;
+
     }
-    public Entry(float value, Date date, String details, String location){
+    public Entry(float value, Date date, String details, String location, Tag tag){
         this._value = value;
         this._date = date;
         this._details = details;
         this._location = location;
+        this._tag = tag;
     }
 
     public Entry(String e){
 
+    }
+
+    public Tag get_tag() {
+        return _tag;
+    }
+
+    public void set_tag(Tag tag) {
+        this._tag = tag;
     }
 
     public void set_id(int _id) {

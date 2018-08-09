@@ -14,6 +14,14 @@ import java.util.Date;
 
 public class LogsActivity extends AppCompatActivity {
 
+    /*TODO
+    Show tag on log
+    Edit and delete tags
+    Show tag on tag listview
+    can change tag when editing an entry
+     */
+
+
     ListView logsListView;
     String[] items;
     String[] amounts;

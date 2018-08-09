@@ -171,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
         final EditText dateEditText;
         final EditText locationEditText;
         final EditText detailsEditText;
-
+        final EditText tagEditText;
         myDialog.setContentView(R.layout.newentrypopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         submitButton = (Button) myDialog.findViewById(R.id.submitButton);
@@ -179,6 +179,7 @@ public class HomeActivity extends AppCompatActivity {
         dateEditText = (EditText) myDialog.findViewById(R.id.dateEditText);
         locationEditText = (EditText) myDialog.findViewById(R.id.locationEditText);
         detailsEditText = (EditText) myDialog.findViewById(R.id.detailsEditText);
+        tagEditText = (EditText) myDialog.findViewById(R.id.tagEditText);
         final MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
 
         infoDialog = new Dialog(this);
@@ -186,6 +187,17 @@ public class HomeActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tagTitle = tagEditText.getText().toString();
+                Tag thisTag = tags.get(0); // "No Tag" tag
+                boolean validTag = false;
+                for (int i = 0; i < tags.size(); i++){
+                    if (tags.get(i).getText().toLowerCase().equals(tagTitle.toLowerCase())){
+                        validTag = true;
+                        thisTag = tags.get(i);
+                        break;
+                    }
+                }
+
                 String amountString =  amountEditText.getText().toString();
                 Boolean canParse = false;
                 Date inputDate = new Date();
@@ -221,12 +233,14 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 else if (amountString.equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter an amount!", Toast.LENGTH_SHORT).show();
+                } else if (!tagTitle.equals("")  && !validTag){
+                    Toast.makeText(getApplicationContext(), "No tag exists with that title!", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Float amountFloat = Float.parseFloat(amountString);
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
 
-                    Entry newEntry = new Entry(amountFloat, inputDate, locationEditText.getText().toString(), detailsEditText.getText().toString());
+                    Entry newEntry = new Entry(amountFloat, inputDate, locationEditText.getText().toString(), detailsEditText.getText().toString(), thisTag);
                     dbHandler.addEntry(newEntry);
                     Toast.makeText(getApplicationContext(), "Entry added", Toast.LENGTH_SHORT).show();
                     refresh();
