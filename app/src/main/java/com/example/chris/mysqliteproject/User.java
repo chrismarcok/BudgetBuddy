@@ -12,6 +12,7 @@ public class User {
     private Date appSetupDate;
     private Date currentBudgetStartDate;
     private Date nextBudgetStartDate;
+    private Tag tag;
 
 
     public User(String first, String last, boolean save, String time, float budget, Date appSetup, Date currentBudgetDate, Date nextBudgetDate){
@@ -27,6 +28,14 @@ public class User {
 
     public User(){
 
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
     public Date getAppSetupDate() {

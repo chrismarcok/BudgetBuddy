@@ -40,7 +40,7 @@ public class TagAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) v.findViewById(R.id.titleTagTextView);
         TextView colorTextView = (TextView) v.findViewById(R.id.colorTagTextView);
 
-        String thisColor = colors[i];
+        String thisColor = "#" + colors[i].toUpperCase();
         String thisTitle = titles[i];
 
         titleTextView.setText(thisTitle);

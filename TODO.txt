@@ -38,3 +38,5 @@ Info popup explains each
 Show streak whatshot
 Show total days under budget checkcircle
 Show total money saved moneyoff
+
+Analysis button, new tag button
