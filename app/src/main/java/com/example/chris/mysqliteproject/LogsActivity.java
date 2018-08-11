@@ -25,8 +25,7 @@ public class LogsActivity extends AppCompatActivity {
     ListView logsListView;
     String[] items;
     String[] amounts;
-    String[] details;
-    String[] locations;
+    Tag[] tags;
     Boolean[] newBool;
 
     @Override
@@ -43,36 +42,24 @@ public class LogsActivity extends AppCompatActivity {
 
         items = new String[numEntries];
         amounts = new String[numEntries];
-        details = new String[numEntries];
-        locations = new String[numEntries];
         newBool = new Boolean[numEntries];
+        tags = new Tag[numEntries];
         ArrayList<Entry> entries = HomeActivity.entries;
         Collections.reverse(entries);
         for (int i = 0; i < numEntries; i++){
             Entry e = entries.get(i);
-            items[i] = MyDBHandler.DATE_FORMAT.format(e.get_date());
+            tags[i] = e.get_tag();
+            items[i] = MyDBHandler.DATE_FORMAT_LOGS.format(e.get_date());
             if (e.get_value() < 0){
                 amounts[i] = "-$" + String.format("%.2f", -e.get_value());
             }
             else {
                 amounts[i] = "$" + String.format("%.2f", e.get_value());
             }
-            if (e.get_location().equals("")){
-                locations[i] = "No Location";
-            }
-            else {
-                locations[i] = e.get_location();
-            }
-            if (e.get_details().equals("")){
-                details[i] = "No Details";
-            }
-            else {
-                details[i] = e.get_details();
-            }
             newBool[i] = (e.get_date().before(new Date()))&&(HomeActivity.now.getTime() - e.get_date().getTime() < 1000 * 60 * 60); //1000ms * 60sec * 60min = 1 Hour
         }
 
-        ItemAdapter itemAdapter = new ItemAdapter(this, items, amounts, details, locations, newBool);
+        ItemAdapter itemAdapter = new ItemAdapter(this, items, amounts, newBool, tags);
         logsListView.setAdapter(itemAdapter);
 
         logsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -5,7 +5,8 @@
     <string name="date"><font fgcolor='#8B0000'></font> Date</string>
     <string name="location"><font fgcolor='#8B0000'></font> Location</string>
     <string name="details"><font fgcolor='#8B0000'></font> Details</string>
-    <string name="info">Fields marked with <font fgcolor='#8B0000'>*</font> are required.\n\nYou may enter negative numbers, acting as a debit entry rather than a credit entry.</string>
+    <string name="info">Fields marked with <font fgcolor='#8B0000'>*</font> are required.\n\nYou may enter negative numbers in amount field, which will act as a debit entry rather than a credit entry.\n\nThe default date is now.\n\nThe default tag is \"No Tag\". Please create
+    tags in the \"Tags\" activity before using them to create a new entry.</string>
     <string name="about">This app was developed by Chris Marcok in July-Aug 2018. It was developed with Android Studio
         using the Java language.
     </string>

@@ -66,11 +66,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
-
-        dbHandler = new MyDBHandler(this, null, null, 1);
-        dbHandler.fetchDatabaseEntries();
         tagDBHandler = new TagDBHandler(this, null, null, 1);
         tagDBHandler.fetchDatabaseEntries();
+        dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler.fetchDatabaseEntries();
+
 
         myDialog = new Dialog(this);
 
@@ -240,7 +240,7 @@ public class HomeActivity extends AppCompatActivity {
                     Float amountFloat = Float.parseFloat(amountString);
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
 
-                    Entry newEntry = new Entry(amountFloat, inputDate, locationEditText.getText().toString(), detailsEditText.getText().toString(), thisTag);
+                    Entry newEntry = new Entry(amountFloat, inputDate, thisTag);
                     dbHandler.addEntry(newEntry);
                     Toast.makeText(getApplicationContext(), "Entry added", Toast.LENGTH_SHORT).show();
                     refresh();
@@ -320,8 +320,8 @@ public class HomeActivity extends AppCompatActivity {
     private void refresh(){
         now = new Date();
         loadThisUser();
-        dbHandler.fetchDatabaseEntries();
         tagDBHandler.fetchDatabaseEntries();
+        dbHandler.fetchDatabaseEntries();
         millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - now.getTime();
         if (millisecondsLeft < 0){
             createNewBudget();

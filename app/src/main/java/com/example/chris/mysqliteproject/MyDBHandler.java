@@ -19,8 +19,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_VALUE = "_value";
     public static final String COLUMN_DATE = "_date";
-    public static final String COLUMN_DETAILS = "_details";
-    public static final String COLUMN_LOCATION = "_location";
+//    public static final String COLUMN_DETAILS = "_details";
+//    public static final String COLUMN_LOCATION = "_location";
     public static final String COLUMN_TAG_ID = "_tag";
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
     public static final DateFormat DATE_FORMAT_NO_SEC = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -28,6 +28,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final DateFormat DATE_FORMAT_NO_TIME_SPACES = new SimpleDateFormat("yyyy MM dd");
     public static final DateFormat DATE_FORMAT_NO_TIME_SLASHES = new SimpleDateFormat("yyyy/MM/dd");
     public static final DateFormat DATE_FORMAT_CALENDAR = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy");
+    public static final DateFormat DATE_FORMAT_LOGS = new SimpleDateFormat("E, MMM dd - hh:mm a");
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -39,8 +40,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_VALUE + " REAL, " +
                 COLUMN_DATE + " TEXT, " +
-                COLUMN_DETAILS + " TEXT, " +
-                COLUMN_LOCATION + " TEXT, " +
                 COLUMN_TAG_ID + " INTEGER" +
                 ");";
 
@@ -58,8 +57,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(COLUMN_VALUE, entry.get_value());
         values.put(COLUMN_DATE, DATE_FORMAT.format(entry.get_date()));
-        values.put(COLUMN_DETAILS, entry.get_details());
-        values.put(COLUMN_LOCATION, entry.get_location());
         values.put(COLUMN_TAG_ID, entry.get_tag().getId());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ENTRIES, null, values);
@@ -86,51 +83,11 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.execSQL("UPDATE " + TABLE_ENTRIES + " SET " +
                 COLUMN_VALUE + " = " + e.get_value() + ", " +
                 COLUMN_DATE + " = \"" + DATE_FORMAT.format(e.get_date()) + "\", " +
-                COLUMN_LOCATION + " = \"" + e.get_location() + "\", " +
-                COLUMN_DETAILS + " = \"" + e.get_details() + "\", " +
                 COLUMN_TAG_ID + " = \"" + e.get_tag().getId() + "\"" +
                 " WHERE " + COLUMN_ID + " = " + e.get_id() +";");
         db.close();
     }
 
-
-    public String databaseToString(){
-
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_ENTRIES + ";";
-
-
-        Cursor c = db.rawQuery(query, null);
-        HomeActivity.entries.clear();
-        c.moveToFirst();
-        while (!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex(COLUMN_VALUE)) != null){
-
-                String strDate =  c.getString(c.getColumnIndex(COLUMN_DATE));
-
-                Date resultDate = new Date(1L);
-
-                try {
-                    resultDate = DATE_FORMAT.parse(strDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                Entry e = new Entry(c.getInt(c.getColumnIndex(COLUMN_ID)),
-                        c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate,
-                        c.getString(c.getColumnIndex(COLUMN_LOCATION)), c.getString(c.getColumnIndex(COLUMN_DETAILS)));
-
-                dbString += e.get_id() + ". ";
-                dbString += DATE_FORMAT.format(e.get_date()) + ", ";
-                dbString += "$" + String.format("%.2f", e.get_value()) + "\n";
-            }
-            c.moveToNext();
-        }
-        c.close();
-        db.close();
-        return dbString;
-    }
 
     public void fetchDatabaseEntries(){
         String dbString = "";
@@ -146,16 +103,21 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 String strDate =  c.getString(c.getColumnIndex(COLUMN_DATE));
 
                 Date resultDate = new Date(1L);
-
+                int tagId = c.getInt(c.getColumnIndex(COLUMN_TAG_ID));
                 try {
                     resultDate = DATE_FORMAT.parse(strDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                Tag t = HomeActivity.tags.get(0);
+                for (int i = 0; i < HomeActivity.tags.size(); i++){
+                    if (tagId == HomeActivity.tags.get(i).getId()){
+                        t = HomeActivity.tags.get(i);
+                    }
+                }
 
                 Entry e = new Entry(c.getInt(c.getColumnIndex(COLUMN_ID)),
-                        c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate,
-                        c.getString(c.getColumnIndex(COLUMN_LOCATION)), c.getString(c.getColumnIndex(COLUMN_DETAILS)));
+                        c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate, t);
 
                 HomeActivity.entries.add(e);
 

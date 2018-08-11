@@ -6,26 +6,22 @@ import java.util.Date;
 public class Entry {
 
     private int _id;
-    private String _details;
+
     private Date _date;
-    private String _location;
+
     private float _value;
     private Tag _tag;
 
 
-    public Entry(int id, float value, Date date, String details, String location){
+    public Entry(int id, float value, Date date, Tag tag){
         this._id = id;
         this._value = value;
         this._date = date;
-        this._details = details;
-        this._location = location;
-
+        this._tag = tag;
     }
-    public Entry(float value, Date date, String details, String location, Tag tag){
+    public Entry(float value, Date date, Tag tag){
         this._value = value;
         this._date = date;
-        this._details = details;
-        this._location = location;
         this._tag = tag;
     }
 
@@ -49,32 +45,16 @@ public class Entry {
         return _id;
     }
 
-    public String get_details() {
-        return _details;
-    }
-
     public Date get_date() {
         return _date;
-    }
-
-    public String get_location() {
-        return _location;
     }
 
     public float get_value() {
         return _value;
     }
 
-    public void set_details(String _details) {
-        this._details = _details;
-    }
-
     public void set_date(Date _date) {
         this._date = _date;
-    }
-
-    public void set_location(String _location) {
-        this._location = _location;
     }
 
     public void set_value(float _value) {

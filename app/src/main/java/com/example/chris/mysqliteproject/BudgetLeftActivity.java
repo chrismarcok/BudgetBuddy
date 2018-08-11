@@ -57,7 +57,7 @@ public class BudgetLeftActivity extends AppCompatActivity {
             budgetLeftTextView.setTextColor(getResources().getColor(R.color.green));
             underOverTextView.setText("under budget.");
         }
-        dateTextView.setText(MyDBHandler.DATE_FORMAT.format(HomeActivity.thisUser.getNextBudgetStartDate()));
+        dateTextView.setText(MyDBHandler.DATE_FORMAT_CALENDAR.format(HomeActivity.thisUser.getNextBudgetStartDate()));
         float daysLeftInBudget = (float) Math.ceil(( HomeActivity.thisUser.getNextBudgetStartDate().getTime() - new Date().getTime())/1000.0/60.0/60.0/24.0);
         String timePeriod = HomeActivity.thisUser.getTimePeriod();
         if (timePeriod.equals("1 Year") || timePeriod.equals("3 Months")){

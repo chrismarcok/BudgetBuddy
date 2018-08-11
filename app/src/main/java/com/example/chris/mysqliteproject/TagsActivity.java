@@ -57,6 +57,7 @@ public class TagsActivity extends AppCompatActivity {
                 Intent showDetailActivity = new Intent(getApplicationContext(), TagDetailActivity.class);
                 showDetailActivity.putExtra("com.example.chris.mysqliteproject.ITEM_INDEX", i);
                 startActivity(showDetailActivity);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }

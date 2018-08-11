@@ -23,8 +23,7 @@ public class DetailActivity extends AppCompatActivity {
     Button updateButton;
     EditText amountEditTextDetailActivity;
     EditText dateEditTextDetailActivity;
-    EditText locationEditTextDetailActivity;
-    EditText detailsEditTextDetailActivity;
+    EditText tagEditTextDetailActivity;
     Button deleteButton;
 
     @Override
@@ -36,8 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         updateButton = (Button) findViewById(R.id.updateButton);
         amountEditTextDetailActivity = (EditText) findViewById(R.id.amountEditTextDetailActivity);
         dateEditTextDetailActivity = (EditText) findViewById(R.id.dateEditTextDetailActivity);
-        locationEditTextDetailActivity = (EditText) findViewById(R.id.locationEditTextDetailActivity);
-        detailsEditTextDetailActivity = (EditText) findViewById(R.id.detailsEditTextDetailActivity);
+        tagEditTextDetailActivity = (EditText) findViewById(R.id.tagEditTextDetailActivity);
         deleteButton = (Button) findViewById(R.id.deleteButton);
 
         Intent in = getIntent();
@@ -51,8 +49,6 @@ public class DetailActivity extends AppCompatActivity {
 
         amountEditTextDetailActivity.setText(String.valueOf(thisEntry.get_value()));
         dateEditTextDetailActivity.setText(MyDBHandler.DATE_FORMAT.format(thisEntry.get_date()));
-        locationEditTextDetailActivity.setText(thisEntry.get_location());
-        detailsEditTextDetailActivity.setText(thisEntry.get_details());
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +69,7 @@ public class DetailActivity extends AppCompatActivity {
                 String amountString =  amountEditTextDetailActivity.getText().toString();
                 Boolean canParse = false;
                 Date inputDate = new Date();
+                Tag t = thisEntry.get_tag();
                 if (!dateEditTextDetailActivity.getText().toString().equals("")){
                     try {
                         inputDate = MyDBHandler.DATE_FORMAT_NO_TIME.parse(dateEditTextDetailActivity.getText().toString());
@@ -100,6 +97,25 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 }
 
+                if (!t.getText().equals(tagEditTextDetailActivity.getText().toString())){ //if the inputted tag is different
+                    boolean validTag = false;
+                    String tagTitle = tagEditTextDetailActivity.getText().toString();
+                    for (int i = 0; i < HomeActivity.tags.size(); i++){
+                        if (HomeActivity.tags.get(i).getText().toLowerCase().equals(tagTitle.toLowerCase())){
+                            validTag = true;
+                            t = HomeActivity.tags.get(i);
+                            break;
+                        } else if (tagEditTextDetailActivity.getText().toString().equals("")){
+                            validTag = true;
+                            t = HomeActivity.tags.get(0);
+                            break;
+                        }
+                    }
+                    if (!validTag){
+                        Toast.makeText(getApplicationContext(), "Invalid Tag!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 if (!dateEditTextDetailActivity.getText().toString().equals("") && !canParse){
                     Toast.makeText(getApplicationContext(), "Could not parse date!", Toast.LENGTH_SHORT).show();
                 }
@@ -109,7 +125,7 @@ public class DetailActivity extends AppCompatActivity {
                 else{
                     Float amountFloat = Float.parseFloat(amountString);
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
-                    Entry e = new Entry(thisEntry.get_id(), amountFloat, inputDate, locationEditTextDetailActivity.getText().toString(), detailsEditTextDetailActivity.getText().toString());
+                    Entry e = new Entry(thisEntry.get_id(), amountFloat, inputDate, t);
                     dbHandler.updateEntry(e);
                     dbHandler.fetchDatabaseEntries();
                     Toast.makeText(getApplicationContext(), "Entry Updated", Toast.LENGTH_SHORT).show();
@@ -134,8 +150,8 @@ public class DetailActivity extends AppCompatActivity {
         final Entry thisEntry = HomeActivity.entries.get(index);
         amountEditTextDetailActivity.setText(String.valueOf(thisEntry.get_value()));
         dateEditTextDetailActivity.setText(MyDBHandler.DATE_FORMAT.format(thisEntry.get_date()));
-        locationEditTextDetailActivity.setText(thisEntry.get_location());
-        detailsEditTextDetailActivity.setText(thisEntry.get_details());
+        tagEditTextDetailActivity.setText(thisEntry.get_tag().getText());
+
     }
 
     @Override

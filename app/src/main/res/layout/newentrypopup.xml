@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="350dp"
-    android:layout_height="400dp"
+    android:layout_height="320dp"
     android:background="@color/lightgray"
     android:padding="7dp"
     android:layout_gravity="center"
@@ -121,7 +121,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <LinearLayout
                 android:layout_height="40dp"
                 android:layout_width="85dp"
@@ -151,7 +152,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <LinearLayout
                 android:layout_height="40dp"
                 android:layout_width="85dp"
@@ -194,15 +196,16 @@
                     android:textSize="18dp"
                     />
             </LinearLayout>
+
             <EditText
-                android:layout_marginLeft="29dp"
                 android:id="@+id/tagEditText"
                 android:layout_width="267dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="29dp"
 
                 android:ems="10"
                 android:hint="Ex. Clothing"
-                android:inputType="textLongMessage" />
+                android:inputType="textCapWords|textLongMessage" />
         </LinearLayout>
 
         <Button

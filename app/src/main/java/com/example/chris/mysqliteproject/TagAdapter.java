@@ -1,6 +1,7 @@
 package com.example.chris.mysqliteproject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class TagAdapter extends BaseAdapter {
 
         titleTextView.setText(thisTitle);
         colorTextView.setText(thisColor);
+        colorTextView.setTextColor(Color.parseColor(thisColor));
 
         return v;
     }
