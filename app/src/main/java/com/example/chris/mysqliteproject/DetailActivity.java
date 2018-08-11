@@ -14,10 +14,6 @@ import java.text.ParseException;
 import java.util.Date;
 
 public class DetailActivity extends AppCompatActivity {
-    /*TODO
-    Delete Entry
-    Update Entry
-     */
 
     TextView detailActivityTextView;
     Button updateButton;

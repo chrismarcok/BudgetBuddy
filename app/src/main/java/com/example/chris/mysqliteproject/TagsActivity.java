@@ -24,6 +24,7 @@ public class TagsActivity extends AppCompatActivity {
     ListView tagsListView;
     String[] colors;
     String[] titles;
+    Boolean[] defaults;
     Toolbar toolbar;
     Dialog tagDialog;
 
@@ -40,15 +41,23 @@ public class TagsActivity extends AppCompatActivity {
 
         colors = new String[numEntries];
         titles = new String[numEntries];
+        defaults = new Boolean[numEntries];
         ArrayList<Tag> tags = HomeActivity.tags;
         Collections.reverse(tags);
         for (int i = 0; i < numEntries; i++){
             Tag t = tags.get(i);
             colors[i] = t.getCol();
             titles[i] = t.getText();
+            if (t.getId() == 1){
+                defaults[i] = true;
+            }
+            else{
+                defaults[i] = false;
+            }
+
         }
 
-        TagAdapter tagAdapter = new TagAdapter(this, colors, titles);
+        TagAdapter tagAdapter = new TagAdapter(this, colors, titles, defaults);
         tagsListView.setAdapter(tagAdapter);
 
         tagsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,7 +131,7 @@ public class TagsActivity extends AppCompatActivity {
         tagDialog.show();
     }
 
-    public boolean validColour(String col){
+    public static boolean validColour(String col){
         if (col.length() == 6 || col.length() == 3){
             for (int i = 0; i < col.length(); i++){
                 if ("abcdefABCDEF0123456789".indexOf(col.charAt(i)) == -1){
@@ -134,7 +143,7 @@ public class TagsActivity extends AppCompatActivity {
         return false;
     }
 
-    public String formatHexCode(String hex){
+    public static String formatHexCode(String hex){
         if (hex.length() == 6){
             return hex;
         } else{

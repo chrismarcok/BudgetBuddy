@@ -4,19 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TagDetailActivity">
+    tools:context=".DetailActivity">
+
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:text="Update Tag"
+            android:textColor="@color/green"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="@string/title"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/titleEditTextTagDetailActivity"
+                android:layout_width="256dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:ems="10"
+                android:hint="Ex. Clothing"
+                android:inputType="textCapWords" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="@string/color"
+                    android:textColor="@color/black_overlay"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="180dp"
+                android:text="#"
+                android:textColor="@color/green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                />
+
+            <EditText
+                android:id="@+id/colorEditTextTagDetailActivity"
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Ex. FFFFFF"
+                android:inputType="textCapCharacters"
+                android:maxLength="6" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/updateTagDetailButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="40dp"
+            android:text="Update"
+            android:textColor="@color/darkSeaGreen"
+            android:textSize="40dp" />
+        <!--
+        android:onClick="showConfirmPopUp"
+        -->
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/defaultTagTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="This is the default tag. You may edit it to fit your needs."
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/deleteTagDetailButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
+    <Button
+        android:id="@+id/deleteTagDetailButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="delete this tag"
+        android:textSize="30sp"
+        android:textColor="@color/deficit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>

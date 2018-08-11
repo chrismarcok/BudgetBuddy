@@ -11,6 +11,8 @@
         using the Java language.
     </string>
     <string name="version">App Version 0.0</string>
+    <string name="title"><font fgcolor='#8B0000'>*</font>Title</string>
+    <string name="color"><font fgcolor='#8B0000'>*</font>Color</string>
 
     <string-array name="times_array">
         <item>24 Hours</item>
