@@ -95,7 +95,14 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="6" />
         </LinearLayout>
-
+        <Button
+            android:id="@+id/colorPickerButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Color Picker"
+            android:textColor="@color/darkSeaGreen"
+            android:textSize="20dp" />
         <Button
             android:id="@+id/updateTagDetailButton"
             android:layout_width="300dp"
@@ -103,7 +110,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="40dp"
+
             android:text="Update"
             android:textColor="@color/darkSeaGreen"
             android:textSize="40dp" />

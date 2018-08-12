@@ -50,6 +50,7 @@ public class TagAdapter extends BaseAdapter {
             defaultTextView.setVisibility(View.GONE);
         }
 
+
         String thisColor = "#" + colors[i].toUpperCase();
         String thisTitle = titles[i];
 

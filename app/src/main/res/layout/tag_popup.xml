@@ -104,8 +104,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Ex. FFFFFF"
+                android:inputType="textCapCharacters|textShortMessage"
                 android:maxLength="6"
-                android:inputType="textShortMessage"
                 android:visibility="visible" />
         </LinearLayout>
 
