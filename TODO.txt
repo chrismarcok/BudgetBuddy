@@ -1,42 +1,13 @@
-New Entry Button (Creates a popup window)
-Button displaying how much budget left in week/month/year
-Logs Button,
-	Redirects to a logs page
-	each entry can be clicked, popup of entry details
-Settings Button
-	Set new budget,
-	Set budget time interval (Day, 3 Day, Week, Month, Year)
-	Set name
-	App Version
-Records
-	Under Budget Streak
-	Total Amount under budget
-About Button
-	Chris Marcok
-	Github, etc
-	Website
-
-Entry should have
-	id
-	Date/time
-	amount
-	Location (not required)
-	Details (not req)
-	details TAG
-		Ability to Create new tag
-		Shows What it is, has a color (food, clothes, entertainment)
-	
 Analysis button
 Shows spending as pie chart
-Spending as a trend chart
+Show this budget's spending, previous budget's spending
+Show previous budgets in a LineChart
 
 Intro screen
 "My goal is to... Save money/maintain a budget"
-Can choose one, highlights
-Info popup explains each
+Can choose one, highlights.
+Save money, each time a new budget is made, budget decrements.
 
 Show streak whatshot
 Show total days under budget checkcircle
 Show total money saved moneyoff
-
-Analysis button, new tag button
