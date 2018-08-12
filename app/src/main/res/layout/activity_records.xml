@@ -13,12 +13,12 @@
         android:layout_height="600dp"></android.support.v4.view.ViewPager>
 
     <View
-        android:layout_width="52dp"
+        android:layout_width="35dp"
         android:layout_height="32dp"
         android:background="@drawable/dots_bg"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -29,7 +29,7 @@
         android:layout_height="32dp"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

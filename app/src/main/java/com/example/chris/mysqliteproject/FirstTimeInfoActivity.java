@@ -147,10 +147,10 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         }
                         if (m.equals("")){
                             TagDBHandler tagDBHandler = new TagDBHandler(c, null, null, 1);
-                            tagDBHandler.addEntry(new Tag("000000", "No Tag"));
-                            tagDBHandler.addEntry(new Tag("FF0000", "Supermarket"));
-                            tagDBHandler.addEntry(new Tag("00FF00", "Entertainment"));
-                            tagDBHandler.addEntry(new Tag("0000FF", "Clothing"));
+                            tagDBHandler.addEntry(new Tag("777777", "Other"));
+                            tagDBHandler.addEntry(new Tag("2ecc71", "Supermarket"));
+                            tagDBHandler.addEntry(new Tag("f1c40f", "Entertainment"));
+                            tagDBHandler.addEntry(new Tag("e74c3c", "Clothing"));
                         }
 
                     //STORE AS:
@@ -267,7 +267,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
     public void finish(){
         super.finish();
         if (getIntent().hasExtra("com.example.chris.mysqliteproject.INFO")) {
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
     }
 }

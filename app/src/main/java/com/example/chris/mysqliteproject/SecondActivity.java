@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ public class SecondActivity extends AppCompatActivity {
     Button websiteButton;
     Button githubButton;
     Button projButton;
+    ImageView BSJ;
 
 
     @Override
@@ -45,7 +48,15 @@ public class SecondActivity extends AppCompatActivity {
         websiteButton = (Button) findViewById(R.id.websiteButton);
         githubButton = (Button) findViewById(R.id.githubButton);
         projButton = (Button) findViewById(R.id.thisProjButton);
+        BSJ = (ImageView) findViewById(R.id.BSJImageView);
+        final MediaPlayer BSJMP = MediaPlayer.create(this, R.raw.thanks);
 
+        BSJ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BSJMP.start();
+            }
+        });
 
         websiteButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -65,7 +65,7 @@ public class ItemAdapter extends BaseAdapter {
             newTextView.setVisibility(View.VISIBLE);
         }
         else{
-            newTextView.setVisibility(View.GONE);
+            newTextView.setVisibility(View.INVISIBLE);
         }
 
         mainTextView.setText(name);

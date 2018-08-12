@@ -2,6 +2,7 @@ package com.example.chris.mysqliteproject;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,14 +34,13 @@ public class HomeActivity extends AppCompatActivity {
     Dialog myDialog;
     Dialog infoDialog;
 
-    CardView cardOneCardView;
-    CardView cardTwoCardView;
-    CardView cardThreeCardView;
-    CardView cardFourCardView;
-    CardView cardFiveCardView;
-    CardView cardSixCardView;
-    CardView cardSevenCardView;
-    CardView cardEightCardView;
+    CardView newEntryCardView;
+    CardView analysisCardView;
+    CardView logsCardView;
+    CardView budgetLeftCardView;
+    CardView tagsCardView;
+    CardView settingsCardView;
+    CardView aboutCardView;
     MyDBHandler dbHandler;
     TagDBHandler tagDBHandler;
 
@@ -56,6 +56,10 @@ public class HomeActivity extends AppCompatActivity {
     public static User thisUser = new User();
     public static Date now;
     public static float amountSpent = 0;
+    public static float totalAmountSaved = 0.0f;
+    public static int totalDays = 0;
+    public static int daysUnderBudget = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +81,13 @@ public class HomeActivity extends AppCompatActivity {
         refresh();
 
 
-        cardOneCardView = (CardView) findViewById(R.id.cardOneCardView);
-        cardTwoCardView = (CardView) findViewById(R.id.cardTwoCardView);
-        cardThreeCardView =(CardView) findViewById(R.id.cardThreeCardView);
-        cardFourCardView = (CardView) findViewById(R.id.cardFourCardView);
-        cardFiveCardView = (CardView) findViewById(R.id.cardFiveCardView);
-        cardSixCardView =(CardView) findViewById(R.id.cardSixCardView);
-        cardSevenCardView = (CardView) findViewById(R.id.cardSevenCardView);
-        cardEightCardView =(CardView) findViewById(R.id.cardEightCardView);
+        newEntryCardView = (CardView) findViewById(R.id.newEntryCardView);
+        analysisCardView = (CardView) findViewById(R.id.analysisCardView);
+        logsCardView =(CardView) findViewById(R.id.logsCardView);
+        budgetLeftCardView = (CardView) findViewById(R.id.budgetLeftCardView);
+        tagsCardView =(CardView) findViewById(R.id.tagsCardView);
+        settingsCardView = (CardView) findViewById(R.id.settingsCardView);
+        aboutCardView =(CardView) findViewById(R.id.aboutCardView);
 
         swipe = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
@@ -97,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        cardTwoCardView.setOnClickListener(new View.OnClickListener() {
+        budgetLeftCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, BudgetLeftActivity.class);
@@ -107,7 +110,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        cardThreeCardView.setOnClickListener(new View.OnClickListener() {
+        logsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, LogsActivity.class);
@@ -120,15 +123,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
-        cardFourCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startIntent = new Intent(HomeActivity.this, RecordsActivity.class);
-                startActivity(startIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-        cardFiveCardView.setOnClickListener(new View.OnClickListener() {
+        tagsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, TagsActivity.class);
@@ -136,24 +131,24 @@ public class HomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
-        cardSixCardView.setOnClickListener(new View.OnClickListener() {
+        analysisCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startIntent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent startIntent = new Intent(HomeActivity.this, AnalysisActivity.class);
                 startActivity(startIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        cardSevenCardView.setOnClickListener(new View.OnClickListener() {
+        settingsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, FirstTimeInfoActivity.class);
                 startIntent.putExtra("com.example.chris.mysqliteproject.INFO", "a");
                 startActivity(startIntent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        cardEightCardView.setOnClickListener(new View.OnClickListener() {
+        aboutCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, SecondActivity.class);
@@ -386,6 +381,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void createNewBudget(){
+
         Date nextBudgetDate = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(nextBudgetDate);

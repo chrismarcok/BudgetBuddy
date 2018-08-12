@@ -21,24 +21,24 @@ public class SliderAdapter extends PagerAdapter {
     }
 
     public int[] slideImages = {
-            R.mipmap.ic_whatshot_black_24dp,
+//            R.mipmap.ic_whatshot_black_24dp,
             R.mipmap.ic_check_circle_black_24dp,
             R.mipmap.ic_money_off_black_24dp
     };
     public int[] slideBackgrounds = {
-            R.drawable.circlebackgroundgreen,
+//            R.drawable.circlebackgroundgreen,
             R.drawable.circlebackgroundyellow,
             R.drawable.circlebackgroundpurple,
     };
     public String[] slideHeadings = {
-            "Streak",
+//            "Streak",
             "Days Under Budget",
             "Total Money Saved"
     };
     public String[] slideDescs = {
-            String.format("You currently have a %d day streak!\nKeep it up!", 0),
-            String.format("You've been under budget a total of %d/%d days!\nWay to go!", 1, 2),
-            String.format("You've currently saved a total of $%s using BudgetBuddy!\nTalk about savings!", String.format("%.2f",123.2f))
+//            String.format("You currently have a %d day streak!\nKeep it up!", 0),
+            String.format("You've been under budget a total of %d/%d days!\nWay to go!", HomeActivity.daysUnderBudget, HomeActivity.totalDays),
+            String.format("You've currently saved a total of $%s using BudgetBuddy!\nTalk about savings!", String.format("%.2f",HomeActivity.totalAmountSaved))
     };
 
     @Override

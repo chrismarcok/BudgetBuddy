@@ -45,7 +45,7 @@ public class RecordsActivity extends AppCompatActivity {
     }
 
     public void addDotsIndicator(int index){
-        mDots = new TextView[3];
+        mDots = new TextView[2];
         mDotsLayout.removeAllViews();
 
         for(int i = 0; i < mDots.length; i++){
@@ -64,7 +64,6 @@ public class RecordsActivity extends AppCompatActivity {
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
-
         }
 
         @Override

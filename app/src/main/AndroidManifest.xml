@@ -56,7 +56,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".BudgetLeftActivity" />
         <activity android:name=".TagsActivity" />
-        <activity android:name=".TagDetailActivity"></activity>
+        <activity android:name=".TagDetailActivity" />
+        <activity android:name=".AnalysisActivity"></activity>
     </application>
 
 </manifest>
