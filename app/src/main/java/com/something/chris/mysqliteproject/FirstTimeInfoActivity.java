@@ -1,4 +1,4 @@
-package com.example.chris.mysqliteproject;
+package com.something.chris.mysqliteproject;
 
 import android.content.Context;
 import android.content.Intent;
@@ -73,7 +73,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
 
         c = this;
 
-        if (getIntent().hasExtra("com.example.chris.mysqliteproject.INFO")){
+        if (getIntent().hasExtra("com.something.chris.mysqliteproject.INFO")){
             onwardsButton.setText("Save Settings");
             getSupportActionBar().setTitle("Settings");
 
@@ -266,7 +266,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
     @Override
     public void finish(){
         super.finish();
-        if (getIntent().hasExtra("com.example.chris.mysqliteproject.INFO")) {
+        if (getIntent().hasExtra("com.something.chris.mysqliteproject.INFO")) {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
     }

@@ -1,4 +1,4 @@
-package com.example.chris.mysqliteproject;
+package com.something.chris.mysqliteproject;
 
 import android.content.Intent;
 import android.os.Bundle;

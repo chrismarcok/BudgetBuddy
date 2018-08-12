@@ -1,4 +1,4 @@
-package com.example.chris.mysqliteproject;
+package com.something.chris.mysqliteproject;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -41,7 +41,7 @@ public class TagDetailActivity extends AppCompatActivity {
         mButton = (Button) findViewById(R.id.colorPickerButton);
 
         Intent in = getIntent();
-        final int index = in.getIntExtra("com.example.chris.mysqliteproject.ITEM_INDEX", -1);
+        final int index = in.getIntExtra("com.something.chris.mysqliteproject.ITEM_INDEX", -1);
         final Tag thisTag = HomeActivity.tags.get(index);
 
         getSupportActionBar().setTitle(thisTag.getText());

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.chris.mysqliteproject">
+    package="com.something.chris.mysqliteproject">
 
     <application
         android:allowBackup="false"
@@ -54,10 +54,18 @@
             android:name=".RecordsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".BudgetLeftActivity" />
-        <activity android:name=".TagsActivity" />
-        <activity android:name=".TagDetailActivity" />
-        <activity android:name=".AnalysisActivity"></activity>
+        <activity android:name=".BudgetLeftActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"/>
+        <activity android:name=".TagsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TagDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AnalysisActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

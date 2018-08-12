@@ -1,4 +1,4 @@
-package com.example.chris.mysqliteproject;
+package com.something.chris.mysqliteproject;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, FirstTimeInfoActivity.class);
-                startIntent.putExtra("com.example.chris.mysqliteproject.INFO", "a");
+                startIntent.putExtra("com.something.chris.mysqliteproject.INFO", "a");
                 startActivity(startIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

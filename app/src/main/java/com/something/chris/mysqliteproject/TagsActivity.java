@@ -1,4 +1,4 @@
-package com.example.chris.mysqliteproject;
+package com.something.chris.mysqliteproject;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -80,7 +80,7 @@ public class TagsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent showDetailActivity = new Intent(getApplicationContext(), TagDetailActivity.class);
-                showDetailActivity.putExtra("com.example.chris.mysqliteproject.ITEM_INDEX", i);
+                showDetailActivity.putExtra("com.something.chris.mysqliteproject.ITEM_INDEX", i);
                 startActivity(showDetailActivity);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }

@@ -1,4 +1,4 @@
-package com.example.chris.mysqliteproject;
+package com.something.chris.mysqliteproject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
         deleteButton = (Button) findViewById(R.id.deleteButton);
 
         Intent in = getIntent();
-        int index = in.getIntExtra("com.example.chris.mysqliteproject.ITEM_INDEX", -1);
+        int index = in.getIntExtra("com.something.chris.mysqliteproject.ITEM_INDEX", -1);
         final Entry thisEntry = HomeActivity.entries.get(index);
 
 
@@ -142,7 +142,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void refresh(){
         Intent in = getIntent();
-        int index = in.getIntExtra("com.example.chris.mysqliteproject.ITEM_INDEX", -1);
+        int index = in.getIntExtra("com.something.chris.mysqliteproject.ITEM_INDEX", -1);
         final Entry thisEntry = HomeActivity.entries.get(index);
         amountEditTextDetailActivity.setText(String.valueOf(thisEntry.get_value()));
         dateEditTextDetailActivity.setText(MyDBHandler.DATE_FORMAT.format(thisEntry.get_date()));
