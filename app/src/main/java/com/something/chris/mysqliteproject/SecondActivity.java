@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,9 +31,9 @@ import java.io.InputStreamReader;
 public class SecondActivity extends AppCompatActivity {
 
 
-    Button websiteButton;
-    Button githubButton;
-    Button projButton;
+    CardView websiteButton;
+    CardView githubButton;
+    CardView GPlayButton;
     ImageView BSJ;
 
 
@@ -45,9 +46,9 @@ public class SecondActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        websiteButton = (Button) findViewById(R.id.websiteButton);
-        githubButton = (Button) findViewById(R.id.githubButton);
-        projButton = (Button) findViewById(R.id.thisProjButton);
+        websiteButton = (CardView) findViewById(R.id.websiteButton);
+        githubButton = (CardView) findViewById(R.id.githubButton);
+        GPlayButton = (CardView) findViewById(R.id.GPlayButton);
         BSJ = (ImageView) findViewById(R.id.BSJImageView);
         final MediaPlayer BSJMP = MediaPlayer.create(this, R.raw.thanks);
 
@@ -80,10 +81,10 @@ public class SecondActivity extends AppCompatActivity {
                 }
             }
         });
-        projButton.setOnClickListener(new View.OnClickListener() {
+        GPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri webaddress = Uri.parse("https://github.com/chrismarcok/BudgetBuddy");
+                Uri webaddress = Uri.parse("https://play.google.com/store/apps/developer?id=Cutlass+Studios");
 
                 Intent launchWebsite = new Intent(Intent.ACTION_VIEW, webaddress);
                 if (launchWebsite.resolveActivity(getPackageManager()) != null){

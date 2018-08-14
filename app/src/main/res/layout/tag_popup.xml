@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
+    android:layout_width="330dp"
     android:layout_height="315dp"
     android:layout_gravity="center"
     android:background="@color/lightgray"
@@ -15,7 +15,7 @@
             android:id="@+id/txtclose"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="305dp"
+            android:layout_marginLeft="285dp"
             android:background="@drawable/circlebackgroundpurple"
             android:gravity="center"
             android:text="X"
@@ -63,7 +63,7 @@
                 android:id="@+id/tagPopupTitleEditText"
                 android:layout_width="267dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="29dp"
+                android:layout_marginLeft="9dp"
 
                 android:ems="10"
                 android:hint="Ex. Clothing"
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginLeft="135dp"
+                android:layout_marginLeft="115dp"
                 android:text="#"
                 android:textColor="@color/green"
                 android:textSize="18sp"

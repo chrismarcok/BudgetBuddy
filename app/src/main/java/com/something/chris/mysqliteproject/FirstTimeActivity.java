@@ -3,6 +3,7 @@ package com.something.chris.mysqliteproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -10,7 +11,7 @@ import android.widget.Button;
 
 public class FirstTimeActivity extends AppCompatActivity {
 
-    Button letsGoButton;
+    CardView letsGoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class FirstTimeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_time);
         getSupportActionBar().hide();
 
-        letsGoButton = (Button) findViewById(R.id.letsGoButton);
+        letsGoButton = (CardView) findViewById(R.id.letsGoButton);
 
         letsGoButton.setOnClickListener(new View.OnClickListener() {
             @Override

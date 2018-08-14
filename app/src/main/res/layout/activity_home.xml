@@ -4,6 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,7 +22,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
@@ -29,12 +33,14 @@
              -->
             <android.support.v7.widget.CardView
                 android:id="@+id/newEntryCardView"
-                android:layout_width="190dp"
-                android:layout_height="160dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:onClick="showPopup">
+                android:onClick="showPopup"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -44,7 +50,7 @@
 
                     <ImageView
                         android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_height="64sp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/circlebackgroundpurple"
                         android:padding="10dp"
@@ -52,69 +58,28 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="New Entry"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
                         android:background="@color/lightgray" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="Log a recent purcahse" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <!--
-             Sixth CARDVIEW
-             -->
-            <android.support.v7.widget.CardView
-                android:id="@+id/analysisCardView"
-                android:layout_width="190dp"
-                android:layout_height="160dp"
-                android:layout_margin="5dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/circlebackgroundsoftpurple"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_insert_chart_black_24dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Analysis"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
-                        android:background="@color/lightgray" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="Review your spending" />
+                        android:text="Log a recent purchase"
+                        />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -123,7 +88,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
@@ -133,11 +99,14 @@
              -->
             <android.support.v7.widget.CardView
                 android:id="@+id/logsCardView"
-                android:layout_width="190dp"
-                android:layout_height="160dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="showPopup"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,7 +116,7 @@
 
                     <ImageView
                         android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_height="64sp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/circlebackgroundlog"
                         android:padding="10dp"
@@ -155,23 +124,27 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Logs"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
                         android:background="@color/lightgray" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="View previous entries" />
+                        android:text="Review past purchases" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -180,11 +153,13 @@
              -->
             <android.support.v7.widget.CardView
                 android:id="@+id/budgetLeftCardView"
-                android:layout_width="190dp"
-                android:layout_height="160dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -200,30 +175,34 @@
                         android:gravity="center"
                         android:text="$11800"
                         android:textColor="@color/green"
-                        android:textSize="40dp"
+                        android:textSize="40sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/underOverTextView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Under/Over Budget"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
                         android:background="@color/lightgray" />
 
                     <TextView
                         android:id="@+id/resetTimeLeftEditText"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="Budget Resets in 2 Days" />
+                        android:text="Resets in 2 Day(s)" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -231,7 +210,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
@@ -240,11 +220,14 @@
              -->
             <android.support.v7.widget.CardView
                 android:id="@+id/tagsCardView"
-                android:layout_width="190dp"
-                android:layout_height="160dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="showPopup"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -254,7 +237,7 @@
 
                     <ImageView
                         android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_height="64sp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/circlebackgroundred"
                         android:padding="10dp"
@@ -262,35 +245,42 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Tags"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
                         android:background="@color/lightgray" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="Manage your tags" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <!--
-                     Seventh CARDVIEW
-                     -->
+                         Sixth CARDVIEW
+                         -->
             <android.support.v7.widget.CardView
-                android:id="@+id/settingsCardView"
-                android:layout_width="190dp"
-                android:layout_height="160dp"
+                android:id="@+id/analysisCardView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="showPopup"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -300,31 +290,35 @@
 
                     <ImageView
                         android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_height="64sp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/circlebackgroundlightblue"
+                        android:background="@drawable/circlebackgroundsoftpurple"
                         android:padding="10dp"
-                        android:src="@drawable/ic_settings_black_24dp" />
+                        android:src="@drawable/ic_insert_chart_black_24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Settings"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Analysis"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
                         android:background="@color/lightgray" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="Configure app settings" />
+                        android:text="Review your spending" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -333,21 +327,77 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
 
             <!--
+                     Seventh CARDVIEW
+                     -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/settingsCardView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="showPopup"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64sp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/circlebackgroundlightblue"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_settings_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Settings"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
+                        android:background="@color/lightgray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Configure budget" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <!--
              Eighth CARDVIEW
              -->
             <android.support.v7.widget.CardView
                 android:id="@+id/aboutCardView"
-                android:layout_width="250dp"
-                android:layout_height="160dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -365,28 +415,38 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="About"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight=".3"
                         android:background="@color/lightgray" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="Developer Info" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
+
         </LinearLayout>
 
 
     </LinearLayout>
+</RelativeLayout>
+
+
+
+
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -28,11 +30,13 @@ import java.util.Date;
 
 public class FirstTimeInfoActivity extends AppCompatActivity {
 
-    Button onwardsButton;
+    CardView onwardsButton;
+    TextView onwardsButtonTextView;
     Spinner timePeriodSpinner;
     RadioButton saveMoneyRadioButton;
     RadioButton maintainABudgetRadioButton;
     EditText budgetEditText;
+
 
     public String firstName;
     public String lastName;
@@ -56,7 +60,8 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Create a Budget");
 
         budgetEditText = (EditText) findViewById(R.id.budgetEditText);
-        onwardsButton = (Button) findViewById(R.id.onwardsButton);
+        onwardsButton = (CardView) findViewById(R.id.onwardsButton);
+        onwardsButtonTextView = (TextView) findViewById(R.id.onwardsButtonTextView);
         final EditText firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
         final EditText lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
 
@@ -74,7 +79,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
         c = this;
 
         if (getIntent().hasExtra("com.something.chris.mysqliteproject.INFO")){
-            onwardsButton.setText("Save Settings");
+            onwardsButtonTextView.setText("Save Settings");
             getSupportActionBar().setTitle("Settings");
 
             try{
@@ -267,7 +272,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
     public void finish(){
         super.finish();
         if (getIntent().hasExtra("com.something.chris.mysqliteproject.INFO")) {
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 }

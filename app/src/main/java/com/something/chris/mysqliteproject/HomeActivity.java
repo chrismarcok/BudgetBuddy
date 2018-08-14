@@ -31,6 +31,13 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
+    /*
+    TODO:
+    Format Logs Update Activity
+    Format Tags Update Activity
+
+     */
+
     Dialog myDialog;
     Dialog infoDialog;
 
@@ -119,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "No logs to show!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Add some entries first!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -135,8 +142,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent startIntent = new Intent(HomeActivity.this, AnalysisActivity.class);
-                startActivity(startIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (entries.size() > 0){
+                    startActivity(startIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Add some entries first!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         settingsCardView.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +157,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent startIntent = new Intent(HomeActivity.this, FirstTimeInfoActivity.class);
                 startIntent.putExtra("com.something.chris.mysqliteproject.INFO", "a");
                 startActivity(startIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
         aboutCardView.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +173,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void showPopup(View v){
         TextView txtclose;
-        Button submitButton;
+        CardView submitButton;
         final EditText amountEditText;
         final EditText dateEditText;
         final EditText locationEditText;
@@ -169,7 +181,7 @@ public class HomeActivity extends AppCompatActivity {
         final EditText tagEditText;
         myDialog.setContentView(R.layout.newentrypopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        submitButton = (Button) myDialog.findViewById(R.id.submitButton);
+        submitButton = (CardView) myDialog.findViewById(R.id.submitButton);
         amountEditText = (EditText) myDialog.findViewById(R.id.amountEditText);
         dateEditText = (EditText) myDialog.findViewById(R.id.dateEditText);
         locationEditText = (EditText) myDialog.findViewById(R.id.locationEditText);
