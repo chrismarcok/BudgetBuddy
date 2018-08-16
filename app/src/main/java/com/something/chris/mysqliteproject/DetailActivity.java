@@ -7,8 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +30,15 @@ public class DetailActivity extends AppCompatActivity {
     EditText tagEditTextDetailActivity;
     Button deleteButton;
     SlideToActView deleteSlider;
+    Spinner repeatSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_detail);
+        getSupportActionBar().hide();
         String title;
         final MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         updateButton = (CardView) findViewById(R.id.updateButton);
@@ -39,6 +47,12 @@ public class DetailActivity extends AppCompatActivity {
         tagEditTextDetailActivity = (EditText) findViewById(R.id.tagEditTextDetailActivity);
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteSlider = (SlideToActView) findViewById(R.id.deleteSlider);
+        repeatSpinner = (Spinner) findViewById(R.id.repeatSpinnerDetailActivity);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.repeat_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        repeatSpinner.setAdapter(adapter);
 
         Intent in = getIntent();
         int index = in.getIntExtra("com.something.chris.mysqliteproject.ITEM_INDEX", -1);
@@ -51,6 +65,14 @@ public class DetailActivity extends AppCompatActivity {
 
         amountEditTextDetailActivity.setText(String.valueOf(thisEntry.get_value()));
         dateEditTextDetailActivity.setText(MyDBHandler.DATE_FORMAT.format(thisEntry.get_date()));
+        for(int i= 0; i < repeatSpinner.getAdapter().getCount(); i++)
+        {
+            if(repeatSpinner.getAdapter().getItem(i).toString().contains(thisEntry.get_repeat()))
+            {
+                repeatSpinner.setSelection(i);
+                break;
+            }
+        }
 
         deleteSlider.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
@@ -60,6 +82,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent returnHome = new Intent(DetailActivity.this, HomeActivity.class);
                 startActivity(returnHome);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                DetailActivity.this.finish();
             }
         });
 
@@ -72,6 +95,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent returnHome = new Intent(DetailActivity.this, HomeActivity.class);
                 startActivity(returnHome);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                DetailActivity.this.finish();
             }
         });
 
@@ -138,7 +162,7 @@ public class DetailActivity extends AppCompatActivity {
                 else{
                     Float amountFloat = Float.parseFloat(amountString);
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
-                    Entry e = new Entry(thisEntry.get_id(), amountFloat, inputDate, t);
+                    Entry e = new Entry(thisEntry.get_id(), amountFloat, inputDate, t, repeatSpinner.getSelectedItem().toString(), thisEntry.is_repeated());
                     dbHandler.updateEntry(e);
                     dbHandler.fetchDatabaseEntries();
                     Toast.makeText(getApplicationContext(), "Entry Updated", Toast.LENGTH_SHORT).show();
@@ -146,6 +170,7 @@ public class DetailActivity extends AppCompatActivity {
                     Intent returnHome = new Intent(DetailActivity.this, HomeActivity.class);
                     startActivity(returnHome);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                 }
             }
         });

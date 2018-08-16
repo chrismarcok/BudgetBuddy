@@ -19,6 +19,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_VALUE = "_value";
     public static final String COLUMN_DATE = "_date";
+    public static final String COLUMN_REPEAT = "_repeat";
+    public static final String COLUMN_HAS_REPEATED = "_repeated";
 //    public static final String COLUMN_DETAILS = "_details";
 //    public static final String COLUMN_LOCATION = "_location";
     public static final String COLUMN_TAG_ID = "_tag";
@@ -35,13 +37,51 @@ public class MyDBHandler extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    public void checkAndUpdateTable(){
+        SQLiteDatabase db = getWritableDatabase();
+        if (!isFieldExist(db, "entries", "_repeat")){
+            db.execSQL("ALTER TABLE " + TABLE_ENTRIES + " ADD COLUMN " + COLUMN_REPEAT + " TEXT;");
+            db.execSQL("UPDATE " + TABLE_ENTRIES + " SET " + COLUMN_REPEAT + " = \"" + "Never" + "\";");
+        }
+        if (!isFieldExist(db, "entries", "_repeated")){
+            db.execSQL("ALTER TABLE " + TABLE_ENTRIES + " ADD COLUMN " + COLUMN_HAS_REPEATED + " INTEGER;");
+            db.execSQL("UPDATE " + TABLE_ENTRIES + " SET " + COLUMN_HAS_REPEATED + " = " + 0 + ";");
+        }
+        db.close();
+    }
+
+    public boolean isFieldExist(SQLiteDatabase db, String tableName, String fieldName)
+    {
+        boolean isExist = false;
+
+        Cursor res = null;
+
+        try {
+
+            res = db.rawQuery("Select * from "+ tableName +" limit 1", null);
+
+            int colIndex = res.getColumnIndex(fieldName);
+            if (colIndex!=-1){
+                isExist = true;
+            }
+
+        } catch (Exception e) {
+        } finally {
+            try { if (res !=null){ res.close(); } } catch (Exception e1) {}
+        }
+
+        return isExist;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_ENTRIES + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_VALUE + " REAL, " +
                 COLUMN_DATE + " TEXT, " +
-                COLUMN_TAG_ID + " INTEGER" +
+                COLUMN_TAG_ID + " INTEGER, " +
+                COLUMN_REPEAT + " TEXT, " +
+                COLUMN_HAS_REPEATED + " INTEGER" +
                 ");";
 
         db.execSQL(query);
@@ -59,6 +99,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_VALUE, entry.get_value());
         values.put(COLUMN_DATE, DATE_FORMAT.format(entry.get_date()));
         values.put(COLUMN_TAG_ID, entry.get_tag().getId());
+        values.put(COLUMN_REPEAT, entry.get_repeat());
+        values.put(COLUMN_HAS_REPEATED, entry.is_repeated()? 1 : 0);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ENTRIES, null, values);
         db.close();
@@ -70,19 +112,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
-    public void dequeue(){
-        SQLiteDatabase db = getWritableDatabase();
-
-        db.execSQL("DELETE FROM " + TABLE_ENTRIES + " WHERE " + COLUMN_ID + " = (SELECT min(" + COLUMN_ID +  ") FROM " + TABLE_ENTRIES + ");");
-        db.close();
-
-    }
 
     public void updateEntry(Entry e){
         SQLiteDatabase db = getWritableDatabase();
-        //UPDATE entries SET _id = 123 WHERE _id = 0;
         db.execSQL("UPDATE " + TABLE_ENTRIES + " SET " +
                 COLUMN_VALUE + " = " + e.get_value() + ", " +
+                COLUMN_REPEAT + " = \"" + e.get_repeat() + "\", " +
+                COLUMN_HAS_REPEATED + " = " + (e.is_repeated()? 1 : 0) + ", " +
                 COLUMN_DATE + " = \"" + DATE_FORMAT.format(e.get_date()) + "\", " +
                 COLUMN_TAG_ID + " = \"" + e.get_tag().getId() + "\"" +
                 " WHERE " + COLUMN_ID + " = " + e.get_id() +";");
@@ -91,7 +127,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
 
     public void fetchDatabaseEntries(){
-        String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_ENTRIES + ";";
 
@@ -118,7 +153,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 }
 
                 Entry e = new Entry(c.getInt(c.getColumnIndex(COLUMN_ID)),
-                        c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate, t);
+                        c.getFloat(c.getColumnIndex(COLUMN_VALUE)), resultDate, t,
+                        c.getString(c.getColumnIndex(COLUMN_REPEAT)),
+                        (c.getInt(c.getColumnIndex(COLUMN_HAS_REPEATED)) == 1));
 
                 HomeActivity.entries.add(e);
 

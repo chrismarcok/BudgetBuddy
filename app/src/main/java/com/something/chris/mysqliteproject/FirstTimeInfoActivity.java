@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -29,9 +31,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 
 public class FirstTimeInfoActivity extends AppCompatActivity {
 
@@ -56,12 +61,50 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
     public static final int CURRENT_BUDGET_START_DATE = 6;
     public static final int NEXT_BUDGET_DATE = 7;
 
+    public static Tag[] defaultTags = {
+                            new Tag("9E9E9E", "Other"),
+                            new Tag("9E9E9E", "Income"),
+                            new Tag("FFEB3B", "Gift"),
+                            new Tag("FFEB3B", "Donation"),
+                            new Tag("795548", "Tax"),
+                            new Tag("795548", "Shipping"),
+                            new Tag("795548", "Printing"),
+                            new Tag("795548", "Office Supplies"),
+                            new Tag("795548", "Parking"),
+                            new Tag("795548", "Gas"),
+                            new Tag("4CAF50", "Flight"),
+                            new Tag("4CAF50", "Train"),
+                            new Tag("4CAF50", "Presto"),
+                            new Tag("607D8B", "Uber"),
+                            new Tag("009688", "Rent"),
+                            new Tag("009688", "Utilities"),
+                            new Tag("009688", "Daycare"),
+                            new Tag("009688", "Phone"),
+                            new Tag("03A9F4", "Textbooks"),
+                            new Tag("03A9F4", "Tuition"),
+                            new Tag("3F51B5", "Doctor"),
+                            new Tag("3F51B5", "Dentist"),
+                            new Tag("3F51B5", "Gym"),
+                            new Tag("9C27B0", "Hair"),
+                            new Tag("9C27B0", "Accessories"),
+                            new Tag("9C27B0", "Clothing"),
+                            new Tag("E91E63", "Books"),
+                            new Tag("E91E63", "Video Games"),
+                            new Tag("E91E63", "Movies"),
+                            new Tag("E91E63", "Music"),
+                            new Tag("E91E63", "Hobbies"),
+                            new Tag("F44336", "Groceries"),
+                            new Tag("F44336", "Coffee"),
+                            new Tag("F44336", "Fast Food"),
+                            new Tag("F44336", "Alcohol")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_first_time_info);
-
+        getSupportActionBar().hide();
         getSupportActionBar().setTitle("Create a Budget");
 
         budgetEditText = (EditText) findViewById(R.id.budgetEditText);
@@ -115,6 +158,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                     if(timePeriodSpinner.getAdapter().getItem(i).toString().contains(strArr[3]))
                     {
                         timePeriodSpinner.setSelection(i);
+                        break;
                     }
                 }
                 budgetEditText.setText(strArr[BUDGET]);
@@ -157,10 +201,9 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         }
                         if (m.equals("")){
                             TagDBHandler tagDBHandler = new TagDBHandler(c, null, null, 1);
-                            tagDBHandler.addEntry(new Tag("777777", "Other"));
-                            tagDBHandler.addEntry(new Tag("2ecc71", "Supermarket"));
-                            tagDBHandler.addEntry(new Tag("f1c40f", "Entertainment"));
-                            tagDBHandler.addEntry(new Tag("e74c3c", "Clothing"));
+                            for (Tag t : defaultTags){
+                                tagDBHandler.addEntry(t);
+                            }
                         }
 
                     //STORE AS:
@@ -300,5 +343,14 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
         if (getIntent().hasExtra("com.something.chris.mysqliteproject.INFO")) {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
+    }
+
+    public static void main(String[] args){
+        ArrayList<Tag> t = new ArrayList<>();
+
+
+        Tag tag = new Tag("FFF", "white");
+        t.add(tag);
+        System.out.println(t.contains(tag));
     }
 }

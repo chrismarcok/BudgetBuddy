@@ -3,6 +3,8 @@ package com.something.chris.mysqliteproject;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -15,8 +17,10 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,16 +46,8 @@ import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
 
-    /*
-    TODO:
-    Format Logs Update Activity
-    Format Tags Update Activity
-
-     */
-
     Dialog myDialog;
     Dialog infoDialog;
-
     CardView newEntryCardView;
     CardView analysisCardView;
     CardView logsCardView;
@@ -61,15 +57,14 @@ public class HomeActivity extends AppCompatActivity {
     CardView aboutCardView;
     MyDBHandler dbHandler;
     TagDBHandler tagDBHandler;
-
     TextView budgetNumTextView;
     TextView underOverTextView;
     TextView resetTimeLeftEditText;
     SwipeRefreshLayout swipe;
-
     Long millisecondsLeft;
 
 
+    ArrayList<Entry> repeatEntryDates = new ArrayList<>();
     public static ArrayList<Entry> entries = new ArrayList<>();
     public static ArrayList<Tag> tags = new ArrayList<>();
     public static User thisUser = new User();
@@ -92,16 +87,16 @@ public class HomeActivity extends AppCompatActivity {
 
         tagDBHandler = new TagDBHandler(this, null, null, 1);
         tagDBHandler.fetchDatabaseEntries();
+        //tagDBHandler.addDefaultTags();
         dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler.checkAndUpdateTable();
         dbHandler.fetchDatabaseEntries();
+
         final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
         myDialog = new Dialog(this);
 
         refresh();
-
 
         newEntryCardView = (CardView) findViewById(R.id.newEntryCardView);
         analysisCardView = (CardView) findViewById(R.id.analysisCardView);
@@ -237,6 +232,7 @@ public class HomeActivity extends AppCompatActivity {
         final EditText locationEditText;
         final EditText detailsEditText;
         final EditText tagEditText;
+        final Spinner repeatSpinner;
         myDialog.setContentView(R.layout.newentrypopup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         submitButton = (CardView) myDialog.findViewById(R.id.submitButton);
@@ -245,6 +241,11 @@ public class HomeActivity extends AppCompatActivity {
         locationEditText = (EditText) myDialog.findViewById(R.id.locationEditText);
         detailsEditText = (EditText) myDialog.findViewById(R.id.detailsEditText);
         tagEditText = (EditText) myDialog.findViewById(R.id.tagEditText);
+        repeatSpinner = (Spinner) myDialog.findViewById(R.id.repeatSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.repeat_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        repeatSpinner.setAdapter(adapter);
         final MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
 
         infoDialog = new Dialog(this);
@@ -305,7 +306,7 @@ public class HomeActivity extends AppCompatActivity {
                     Float amountFloat = Float.parseFloat(amountString);
                     amountFloat = ((int)(amountFloat*100 + 0.5))/100.0f;
 
-                    Entry newEntry = new Entry(amountFloat, inputDate, thisTag);
+                    Entry newEntry = new Entry(amountFloat, inputDate, thisTag, repeatSpinner.getSelectedItem().toString(), false);
                     dbHandler.addEntry(newEntry);
                     Toast.makeText(getApplicationContext(), "Entry added", Toast.LENGTH_SHORT).show();
                     refresh();
@@ -388,6 +389,13 @@ public class HomeActivity extends AppCompatActivity {
         loadThisUser();
         tagDBHandler.fetchDatabaseEntries();
         dbHandler.fetchDatabaseEntries();
+        getRepeatEntries();
+        if (repeatEntryDates.size() > 0){
+            for (int i = 0; i < repeatEntryDates.size(); i++){
+                dbHandler.addEntry(repeatEntryDates.get(i));
+            }
+            dbHandler.fetchDatabaseEntries();
+        }
         millisecondsLeft = thisUser.getNextBudgetStartDate().getTime() - now.getTime();
         if (millisecondsLeft < 0){
             createNewBudget();
@@ -437,8 +445,41 @@ public class HomeActivity extends AppCompatActivity {
             value = String.valueOf(millisecondsLeft/1000/60/60/24/7) + " week(s)";
         }
 
-        resetTimeLeftEditText.setText("Resets in "+ value);
+        resetTimeLeftEditText.setText("Resets in " + value);
     }
+
+    private void getRepeatEntries(){
+        repeatEntryDates.clear();
+        for (int i = 0; i < entries.size(); i++){
+            Entry e = entries.get(i);
+            if (!e.get_repeat().equals("Never") && !e.is_repeated() && e.get_date().before(now)){
+                long repeatInMilliseconds = 0L;
+                if (e.get_repeat().equals("Daily")){
+                    repeatInMilliseconds = 86400000L;
+                } else if (e.get_repeat().equals("Weekly")){
+                    repeatInMilliseconds = 604800000L;
+                } else if (e.get_repeat().equals("Monthly")){
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(e.get_date());
+                    cal.add(Calendar.MONTH, 1);
+                    Date date = cal.getTime();
+                    repeatInMilliseconds = (date.getTime() - now.getTime());
+                } else {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(e.get_date());
+                    cal.add(Calendar.YEAR, 1);
+                    Date date = cal.getTime();
+                    repeatInMilliseconds = (date.getTime() - now.getTime());
+                }
+                if (e.get_date().getTime() + repeatInMilliseconds > now.getTime()){
+                    repeatEntryDates.add(new Entry(e.get_value(), new Date(e.get_date().getTime() + repeatInMilliseconds), e.get_tag(), e.get_repeat(), false));
+                    e.set_repeated(true);
+                    dbHandler.updateEntry(e);
+                }
+            }
+        }
+    }
+
 
     private float getAmountSpent(){
         float x = 0;
@@ -500,14 +541,4 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    /*
-    private void disableEditText(EditText editText) {
-        editText.setFocusable(false);
-        editText.setEnabled(false);
-        editText.setCursorVisible(false);
-        editText.setKeyListener(null);
-        editText.setBackgroundColor(Color.TRANSPARENT);
-    }
-    */
 }

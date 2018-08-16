@@ -9,12 +9,13 @@ I created this app because I wanted to find an easy and comprehensible way to tr
 ## Images
 
 ![](https://i.imgur.com/36VgVgC.jpg)
-![](https://i.imgur.com/pGbWmuo.jpg)
-![](https://i.imgur.com/WFNzoKD.jpg)
-![](https://i.imgur.com/F1bTeQi.jpg)
-![](https://i.imgur.com/ufiPIlG.jpg)
-![](https://i.imgur.com/0uPtnJP.jpg)
-![](https://i.imgur.com/xrs48kZ.jpg)
+![](https://i.imgur.com/g667hbN.jpg)
+![](https://i.imgur.com/AFhtGDl.jpg)
+![](https://i.imgur.com/GKOqiRN.jpg)
+![](https://i.imgur.com/1n0Z8zK.jpg)
+![](https://i.imgur.com/MEgCByo.jpg)
+![](https://i.imgur.com/V6MFdq9.jpg)
+![](https://i.imgur.com/4GL6rrh.jpg)
 
 ## Implementation
 BudgetBuddy was creating with AndroidStudio and developed using the Java language. BudgetBuddy also uses SQLite to store things like entries and tags which the user creates. 

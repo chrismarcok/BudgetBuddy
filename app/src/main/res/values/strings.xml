@@ -23,5 +23,12 @@
         <item>3 Months</item>
         <item>1 Year</item>
     </string-array>
+    <string-array name="repeat_array">
+        <item>Never</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
     <string name="title_activity_tag_detail">TagDetailActivity</string>
 </resources>

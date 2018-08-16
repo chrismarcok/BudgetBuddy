@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SecondActivity">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
@@ -15,7 +19,12 @@
         android:gravity="center"
         android:text="Thanks for installing BudgetBuddy!"
         android:textSize="36dp" />
-
+        <ImageView
+            android:id="@+id/BSJImageView"
+            android:layout_width="206dp"
+            android:layout_height="196dp"
+            android:layout_gravity="center"
+            android:src="@drawable/bsj" />
     <TextView
         android:id="@+id/secondActivityTextView"
         android:layout_width="match_parent"
@@ -27,6 +36,7 @@
         android:paddingRight="20dp"
         android:text="@string/about"
         android:textSize="24dp" />
+    </LinearLayout>>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,13 +102,7 @@
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/BSJImageView"
-        android:layout_width="206dp"
-        android:layout_height="196dp"
-        android:layout_below="@+id/textView9"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/bsj" />
+
 
 
 

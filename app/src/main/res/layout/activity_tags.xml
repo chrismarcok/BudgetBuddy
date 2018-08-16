@@ -39,7 +39,7 @@
         android:layout_margin="30dp"
         android:background="@drawable/circlebackgroundpink"
         android:elevation="4dp"
-        android:padding="30dp"
+        android:padding="20dp"
         android:onClick="showTagInfo"
         android:clickable="true"
         android:src="@drawable/ic_add_black_24dp"

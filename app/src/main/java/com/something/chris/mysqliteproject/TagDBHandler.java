@@ -25,6 +25,24 @@ public class TagDBHandler extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+//    public void addDefaultTags(){
+//        fetchDatabaseEntries();
+//        SQLiteDatabase db = getWritableDatabase();
+//            for (int i = 0; i < FirstTimeInfoActivity.defaultTags.length; i++){
+//                boolean found = false;
+//                for (int j = 0; j < HomeActivity.tags.size(); j++){
+//                    if (HomeActivity.tags.get(j).getText().equals(FirstTimeInfoActivity.defaultTags[i].getText())){
+//                        found = true;
+//                        break;
+//                    }
+//                }
+//                if (!found){
+//                    addEntry(FirstTimeInfoActivity.defaultTags[i]);
+//                }
+//            }
+//        db.close();
+//    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_TAGS + " (" +
@@ -81,7 +99,6 @@ public class TagDBHandler extends SQLiteOpenHelper{
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_TAGS + ";";
-
 
         Cursor c = db.rawQuery(query, null);
         HomeActivity.tags.clear();

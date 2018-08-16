@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="330dp"
-    android:layout_height="320dp"
+    android:layout_height="364dp"
     android:background="@color/lightgray"
     android:padding="0dp"
     android:layout_gravity="center">
@@ -213,6 +213,38 @@
                 android:hint="Ex. Clothing"
                 android:inputType="textCapWords|textLongMessage" />
         </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="7dp"
+            android:layout_marginBottom="3dp">
+            <LinearLayout
+                android:layout_height="40dp"
+                android:layout_width="85dp"
+                >
+                <TextView
+                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:text="Repeat"
+                    android:textStyle="bold"
+                    android:textColor="@color/black_overlay"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    />
+            </LinearLayout>
+
+            <Spinner
+                android:layout_marginTop="8dp"
+                android:id="@+id/repeatSpinner"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:ems="10"
+                android:hint="Ex. Clothing"
+                android:inputType="textCapWords|textLongMessage" />
+        </LinearLayout>
 
 
 
@@ -226,6 +258,7 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:clickable="true"
@@ -238,7 +271,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="25dp"
+            android:padding="26dp"
             android:text="Submit"
             android:textColor="@color/black_overlay"
             android:textSize="25sp" />

@@ -10,6 +10,8 @@ import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,7 +39,10 @@ public class TagDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_tag_detail);
+        getSupportActionBar().hide();
         final TagDBHandler tagDBHandler = new TagDBHandler(this, null, null, 1);
 //        deleteButton = (Button) findViewById(R.id.deleteTagDetailButton);
         updateButton = (CardView) findViewById(R.id.updateTagDetailButton);
@@ -129,6 +134,7 @@ public class TagDetailActivity extends AppCompatActivity {
                 Intent returnHome = new Intent(TagDetailActivity.this, HomeActivity.class);
                 startActivity(returnHome);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                TagDetailActivity.this.finish();
             }
         });
 //        deleteButton.setOnClickListener(new View.OnClickListener() {

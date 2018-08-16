@@ -2,11 +2,15 @@ package com.something.chris.mysqliteproject;
 
 import android.graphics.Color;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Tag {
 
     private int _id;
     private String _col;
     private String _text;
+    private ArrayList<String> _aliases = new ArrayList<>();
 
     public Tag(int id, String col, String text){
         _id = id;
