@@ -3,7 +3,12 @@ package com.something.chris.mysqliteproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -123,7 +128,7 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
 
         onwardsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 firstName = firstNameEditText.getText().toString();
                 lastName = lastNameEditText.getText().toString();
@@ -223,19 +228,40 @@ public class FirstTimeInfoActivity extends AppCompatActivity {
                         FileOutputStream fileOutputStream = openFileOutput(file_name, MODE_PRIVATE);
                         fileOutputStream.write(message.getBytes());
                         fileOutputStream.close();
-                        Toast.makeText(getApplicationContext(), "User Info Saved/Updated", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(view, "User Info Saved/Updated", Snackbar.LENGTH_LONG);
+                        View snackbarView = snackbar.getView();
+                        TextView sbTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                        sbTextView.setTextColor(getResources().getColor(R.color.green));
+                        snackbar.show();
+                        new CountDownTimer(700, 700) {
+
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                // do something after 1s
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Intent startMainActivity = new Intent(FirstTimeInfoActivity.this, HomeActivity.class);
+                                startActivity(startMainActivity);
+                                FirstTimeInfoActivity.this.finish();
+                            }
+
+                        }.start();
+                        //Toast.makeText(getApplicationContext(), "User Info Saved/Updated", Toast.LENGTH_SHORT).show();
 
                     } catch (FileNotFoundException e){
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Intent startMainActivity = new Intent(FirstTimeInfoActivity.this, HomeActivity.class);
-                    startActivity(startMainActivity);
-                    FirstTimeInfoActivity.this.finish();
+//                    Intent startMainActivity = new Intent(FirstTimeInfoActivity.this, HomeActivity.class);
+//                    startActivity(startMainActivity);
+//                    FirstTimeInfoActivity.this.finish();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "One or more fields are empty!", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(view, "One or more fields is invalid!", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                 }
 
             }
