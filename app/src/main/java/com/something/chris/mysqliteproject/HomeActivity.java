@@ -419,6 +419,9 @@ public class HomeActivity extends AppCompatActivity {
         else{
             budgetNumTextView.setText("-$" + String.format("%.2f", -num));
         }
+        if (budgetNumTextView.getText().toString().equals("-$-0.00")){
+            budgetNumTextView.setText("$0.00");
+        }
 
         String underOver = "Under Budget";
         if (num < 0){
