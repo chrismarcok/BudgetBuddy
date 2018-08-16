@@ -15,13 +15,14 @@ public class ItemAdapter extends BaseAdapter {
     String[] amounts;
     Boolean[] news;
     Tag[] tags;
+    String[] colors;
 
-
-    public ItemAdapter(Context c, String[] i, String[] p, Boolean[] b, Tag[] t){
+    public ItemAdapter(Context c, String[] i, String[] p, Boolean[] b, Tag[] t, String[] col){
         dates = i;
         amounts = p;
         news = b;
         tags = t;
+        colors = col;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -48,12 +49,16 @@ public class ItemAdapter extends BaseAdapter {
         TextView amountTextView = (TextView) v.findViewById(R.id.logAmountTextView);
         TextView newTextView = (TextView) v.findViewById(R.id.newTextView);
         TextView tagTextView = (TextView) v.findViewById(R.id.logTagTextView);
+        View identifierView = (View) v.findViewById(R.id.logsListViewBudgetIdentifierView);
 
 
         String name = dates[i];
         String cost = amounts[i];
         Boolean newBool = news[i];
         Tag t = tags[i];
+        String color = colors[i];
+
+        identifierView.setBackgroundColor(Color.parseColor("#" + color));
 
         int hex = Integer.parseInt(t.getCol(), 16);
         int r = (hex & 0xFF0000) >> 16;

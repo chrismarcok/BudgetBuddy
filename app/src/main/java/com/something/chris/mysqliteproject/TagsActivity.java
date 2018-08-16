@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import petrov.kristiyan.colorpicker.ColorPicker;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class TagsActivity extends AppCompatActivity {
@@ -34,11 +37,12 @@ public class TagsActivity extends AppCompatActivity {
     Boolean[] defaults;
     Toolbar toolbar;
     Dialog tagDialog;
+    FloatingActionButton addTagFab;
 
     EditText colourEditText;
 
-    int mDefaultColor;
-    Button mButton;
+    int mDefaultColor = Color.parseColor("#2062AF");
+    CardView mButton;
 
     String col;
 
@@ -94,17 +98,17 @@ public class TagsActivity extends AppCompatActivity {
 
     public void showTagInfo(View v){
         TextView txtclose;
-        Button submitButton;
+        CardView submitButton;
         final EditText titleEditText;
 
 
         tagDialog.setContentView(R.layout.tag_popup);
         txtclose = (TextView) tagDialog.findViewById(R.id.txtclose);
-        submitButton = (Button) tagDialog.findViewById(R.id.submitButton);
+        submitButton = (CardView) tagDialog.findViewById(R.id.submitButton);
         titleEditText = (EditText) tagDialog.findViewById(R.id.tagPopupTitleEditText);
         colourEditText = (EditText) tagDialog.findViewById(R.id.tagPopupColourEditText);
         mDefaultColor = ContextCompat.getColor(TagsActivity.this, R.color.black);
-        mButton = (Button) tagDialog.findViewById(R.id.colorPickerButton);
+        mButton = (CardView) tagDialog.findViewById(R.id.colorPickerButton);
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,21 +212,46 @@ public class TagsActivity extends AppCompatActivity {
     }
 
     public void openColorPicker(){
-        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, mDefaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        ColorPicker colorPicker = new ColorPicker(TagsActivity.this);
+        colorPicker.setDefaultColorButton(mDefaultColor);
+        colorPicker.setTitle("Choose a Tag Color");
+        colorPicker.setRoundColorButton(true);
+        colorPicker.show();
+        colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
-            public void onCancel(AmbilWarnaDialog dialog) {
+            public void onChooseColor(int position,int color) {
+                if (color  == 0){
+                    return;
+                } else {
+                    mDefaultColor = color;
+                    int r = Color.red(mDefaultColor);
+                    int g = Color.green(mDefaultColor);
+                    int b = Color.blue(mDefaultColor);
+                    colourEditText.setText(String.format("%02X%02X%02X", r, g, b));
+                    colourEditText.setTextColor(Color.parseColor(String.format("#%02X%02X%02X", r, g, b)));
+                }
             }
 
             @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-                mDefaultColor = color;
-                int r = Color.red(mDefaultColor);
-                int g = Color.green(mDefaultColor);
-                int b = Color.blue(mDefaultColor);
-                colourEditText.setText(String.format("%02X%02X%02X",r,g,b));
-                colourEditText.setTextColor(Color.parseColor(String.format("#%02X%02X%02X",r,g,b)));
+            public void onCancel(){
+                // put code
             }
         });
-        colorPicker.show();
+//        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, mDefaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+//            @Override
+//            public void onCancel(AmbilWarnaDialog dialog) {
+//            }
+//
+//            @Override
+//            public void onOk(AmbilWarnaDialog dialog, int color) {
+//                mDefaultColor = color;
+//                int r = Color.red(mDefaultColor);
+//                int g = Color.green(mDefaultColor);
+//                int b = Color.blue(mDefaultColor);
+//                colourEditText.setText(String.format("%02X%02X%02X",r,g,b));
+//                colourEditText.setTextColor(Color.parseColor(String.format("#%02X%02X%02X",r,g,b)));
+//            }
+//        });
+//        colorPicker.show();
     }
 }

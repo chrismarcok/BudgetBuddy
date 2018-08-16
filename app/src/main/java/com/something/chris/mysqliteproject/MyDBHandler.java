@@ -29,6 +29,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public static final DateFormat DATE_FORMAT_NO_TIME_SLASHES = new SimpleDateFormat("yyyy/MM/dd");
     public static final DateFormat DATE_FORMAT_CALENDAR = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy");
     public static final DateFormat DATE_FORMAT_LOGS = new SimpleDateFormat("E, MMM dd - hh:mm a");
+    public static final DateFormat DATE_FORMAT_TIME = new SimpleDateFormat("hh:mm a");
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);

@@ -8,13 +8,23 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.takusemba.spotlight.OnSpotlightStateChangedListener;
+import com.takusemba.spotlight.OnTargetStateChangedListener;
+import com.takusemba.spotlight.Spotlight;
+import com.takusemba.spotlight.shape.Circle;
+import com.takusemba.spotlight.target.CustomTarget;
+import com.takusemba.spotlight.target.SimpleTarget;
 
 import org.w3c.dom.Text;
 
@@ -58,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Long millisecondsLeft;
 
+
     public static ArrayList<Entry> entries = new ArrayList<>();
     public static ArrayList<Tag> tags = new ArrayList<>();
     public static User thisUser = new User();
@@ -66,7 +77,8 @@ public class HomeActivity extends AppCompatActivity {
     public static float totalAmountSaved = 0.0f;
     public static int totalDays = 0;
     public static int daysUnderBudget = 0;
-
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String FIRST_TIME = "firstTime";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +93,8 @@ public class HomeActivity extends AppCompatActivity {
         tagDBHandler.fetchDatabaseEntries();
         dbHandler = new MyDBHandler(this, null, null, 1);
         dbHandler.fetchDatabaseEntries();
+        final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
         myDialog = new Dialog(this);
@@ -169,6 +183,49 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        boolean firstTime = sharedPreferences.getBoolean(FIRST_TIME, true);
+
+        if (firstTime) {
+            swipe.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    swipe.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    SimpleTarget tagTarget = new SimpleTarget.Builder(HomeActivity.this).setPoint(findViewById(R.id.tagsImageView))
+                            .setShape(new Circle(122f))
+                            .setTitle("What do you like to buy?")
+                            .setDescription("Start off by creating some tags for your entries!")
+                            .build();
+                    SimpleTarget newEntryTarget = new SimpleTarget.Builder(HomeActivity.this).setPoint(findViewById(R.id.newEntryImageView))
+                            .setShape(new Circle(122f))
+                            .setTitle("Start making purchases!")
+                            .setDescription("Use the tags you created to log your purchases!")
+                            .build();
+                    SimpleTarget logsTarget = new SimpleTarget.Builder(HomeActivity.this).setPoint(findViewById(R.id.logsImageView))
+                            .setShape(new Circle(122f))
+                            .setTitle("Review your purchases here!")
+                            .setDescription("Get out there and start saving!")
+                            .build();
+                    Spotlight spotlight = Spotlight.with(HomeActivity.this)
+                            .setOverlayColor(R.color.background)
+                            .setDuration(1000L)
+                            .setAnimation(new DecelerateInterpolator(1f))
+                            .setTargets(tagTarget, newEntryTarget, logsTarget)
+                            .setClosedOnTouchedOutside(true)
+                            .setOnSpotlightStateListener(new OnSpotlightStateChangedListener() {
+                                @Override
+                                public void onStarted() {
+                                }
+
+                                @Override
+                                public void onEnded() {
+                                }
+                            });
+                    spotlight.start();
+                    editor.putBoolean(FIRST_TIME, false);
+                    editor.apply();
+                }
+            });
+        }
     }
 
     public void showPopup(View v){

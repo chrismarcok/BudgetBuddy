@@ -3,12 +3,16 @@ package com.something.chris.mysqliteproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ncorti.slidetoact.SlideToActView;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -16,11 +20,12 @@ import java.util.Date;
 public class DetailActivity extends AppCompatActivity {
 
     TextView detailActivityTextView;
-    Button updateButton;
+    CardView updateButton;
     EditText amountEditTextDetailActivity;
     EditText dateEditTextDetailActivity;
     EditText tagEditTextDetailActivity;
     Button deleteButton;
+    SlideToActView deleteSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +33,12 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         String title;
         final MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        updateButton = (Button) findViewById(R.id.updateButton);
+        updateButton = (CardView) findViewById(R.id.updateButton);
         amountEditTextDetailActivity = (EditText) findViewById(R.id.amountEditTextDetailActivity);
         dateEditTextDetailActivity = (EditText) findViewById(R.id.dateEditTextDetailActivity);
         tagEditTextDetailActivity = (EditText) findViewById(R.id.tagEditTextDetailActivity);
         deleteButton = (Button) findViewById(R.id.deleteButton);
+        deleteSlider = (SlideToActView) findViewById(R.id.deleteSlider);
 
         Intent in = getIntent();
         int index = in.getIntExtra("com.something.chris.mysqliteproject.ITEM_INDEX", -1);
@@ -45,6 +51,17 @@ public class DetailActivity extends AppCompatActivity {
 
         amountEditTextDetailActivity.setText(String.valueOf(thisEntry.get_value()));
         dateEditTextDetailActivity.setText(MyDBHandler.DATE_FORMAT.format(thisEntry.get_date()));
+
+        deleteSlider.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
+            @Override
+            public void onSlideComplete(@NonNull SlideToActView view) {
+                dbHandler.deleteEntry(thisEntry.get_id());
+                dbHandler.fetchDatabaseEntries();
+                Intent returnHome = new Intent(DetailActivity.this, HomeActivity.class);
+                startActivity(returnHome);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

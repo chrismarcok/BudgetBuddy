@@ -49,6 +49,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/newEntryImageView"
                         android:layout_width="64dp"
                         android:layout_height="64sp"
                         android:layout_marginTop="5dp"
@@ -115,6 +116,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/logsImageView"
                         android:layout_width="64dp"
                         android:layout_height="64sp"
                         android:layout_marginTop="5dp"
@@ -236,6 +238,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/tagsImageView"
                         android:layout_width="64dp"
                         android:layout_height="64sp"
                         android:layout_marginTop="5dp"
@@ -244,6 +247,7 @@
                         android:src="@drawable/ic_format_paint_black_24dp" />
 
                     <TextView
+                        android:id="@+id/texttextext"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
